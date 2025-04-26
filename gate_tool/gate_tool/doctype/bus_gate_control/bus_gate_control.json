@@ -26,7 +26,8 @@
   "section_break_xdmg",
   "column_break_xjgc",
   "exempt",
-  "reason_for_exemption"
+  "reason_for_exemption",
+  "status"
  ],
  "fields": [
   {
@@ -147,12 +148,18 @@
    "fieldname": "exemption",
    "fieldtype": "HTML",
    "label": "Exemption"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Entered\nExited\nExemption"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-26 23:26:32.232850",
+ "modified": "2025-04-27 01:08:32.891921",
  "modified_by": "Administrator",
  "module": "Gate Tool",
  "name": "Bus Gate control",

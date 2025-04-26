@@ -287,16 +287,13 @@ function handle_action(frm, action_type) {
 
     // المنطق الخاص بكل زر
     if (action_type === 'entry') {
-        // frm.set_value('status', 'Entered');
-        // frm.save();
+        frm.set_value('status', 'Entered');
         frappe.msgprint(`Perform Entry Action for document: ${frm.doc.name}`);
-        // frm.save('Submit'); 
     } else if (action_type === 'exit') {
-        // frm.set_value('status', 'Exited');
-        // frm.save();
+        frm.set_value('status', 'Exited');
         frappe.msgprint(`Perform Exit Action for document: ${frm.doc.name}`);
     } else if (action_type === 'exemption') {
-        // تبديل حالة حقل الإعفاء والتركيز على السبب إذا تم تفعيله
+        frm.set_value('status', 'Exemption');
         let current_exempt_status = frm.doc.exempt;
         frm.set_value('exempt', current_exempt_status ? 0 : 1);
         frm.refresh_field('exempt');
