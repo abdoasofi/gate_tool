@@ -1,0 +1,178 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-04-26 17:39:53.352630",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_a4r2",
+  "amended_from",
+  "date_and_taime",
+  "column_break_stwt",
+  "customer",
+  "section_break_hrzo",
+  "items",
+  "section_break_nshx",
+  "item",
+  "customer_group",
+  "column_break_jfhs",
+  "price",
+  "price_list",
+  "section_break_mldm",
+  "entry",
+  "exit",
+  "column_break_aazm",
+  "exemption",
+  "section_break_xdmg",
+  "column_break_xjgc",
+  "exempt",
+  "reason_for_exemption"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_a4r2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Bus Gate control",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "now",
+   "fieldname": "date_and_taime",
+   "fieldtype": "Datetime",
+   "label": "Date And Taime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_stwt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "section_break_hrzo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "HTML",
+   "label": "Items"
+  },
+  {
+   "fieldname": "section_break_nshx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "column_break_jfhs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "customer.customer_group",
+   "fieldname": "customer_group",
+   "fieldtype": "Link",
+   "label": "Customer Group",
+   "options": "Customer Group",
+   "read_only": 1
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "Price"
+  },
+  {
+   "fetch_from": "customer_group.default_price_list",
+   "fieldname": "price_list",
+   "fieldtype": "Link",
+   "label": "Price List",
+   "options": "Price List",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_xdmg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "column_break_xjgc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "frm.exempt == 1",
+   "fieldname": "reason_for_exemption",
+   "fieldtype": "Small Text",
+   "label": "Reason For Exemption"
+  },
+  {
+   "default": "0",
+   "fieldname": "exempt",
+   "fieldtype": "Check",
+   "label": "Exempt"
+  },
+  {
+   "fieldname": "section_break_mldm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "entry",
+   "fieldtype": "HTML",
+   "label": "Entry"
+  },
+  {
+   "fieldname": "exit",
+   "fieldtype": "HTML",
+   "label": "Exit"
+  },
+  {
+   "fieldname": "column_break_aazm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "exemption",
+   "fieldtype": "HTML",
+   "label": "Exemption"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-04-26 23:26:32.232850",
+ "modified_by": "Administrator",
+ "module": "Gate Tool",
+ "name": "Bus Gate control",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
