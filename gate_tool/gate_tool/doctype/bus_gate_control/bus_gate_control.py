@@ -3,25 +3,33 @@
 
 import frappe
 from frappe import _
-
 from frappe.model.document import Document
-
-
 class BusGatecontrol(Document):
 	"""
-	نموذج التحكم في بوابة الحافلة.	
+	نموذج التحكم في بوابة الحافلة.
 	"""
 	@frappe.whitelist()
 	def get_items(self):
 		"""
-		يتم استدعاؤها للحصول على الأصناف مجموعة .
+		يتم استدعاؤها للحصول على الأصناف لمجموعة "Bus Gate Control".
 		"""
-
+		items_list = []
 		try:
-			items = frappe.get_all('Item', fields=['name', 'item_name','image'], filters={"item_group": "Bus Gate Control"})
-			for i in items:
-				if i.image:
-					i.image = f"{frappe.utils.get_url()}/{i.image}"
-				return items
+			items = frappe.get_all(
+				'Item',
+				fields=['name', 'item_name', 'image'],
+				filters={"item_group": "Bus Gate Control", "disabled": 0}
+			)
+
+			for item in items:
+				if item.image:
+					if not item.image.startswith(('/files/', 'http://', 'https://')):
+						item.image = f"/files/{item.image.lstrip('/')}"
+				else:
+					item.image = '/assets/frappe/images/fallback-image.png'
+				items_list.append(item)
+			return items_list
+
 		except Exception as e:
+			frappe.log_error(f"Error in get_items: {e}", _("Bus Gate Control Error"))
 			return []
