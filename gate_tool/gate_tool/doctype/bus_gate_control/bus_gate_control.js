@@ -1,3 +1,4 @@
+// ... (الكود السابق: refresh, load_items, initialize_item_slider, fetch_item_price, fetch_standard_rate) ...
 // Copyright (c) 2025, Asofi and contributors
 // For license information, please see license.txt
 
@@ -231,78 +232,245 @@ function initialize_item_slider(frm, container) {
 // تصميم وإضافة الأزرار المخصصة (الدخول، الخروج، الإعفاء)
 //----------------------------------------------------------------------------------
 function setup_custom_buttons(frm) {
+    // إخفاء الأزرار إذا كان المستند معتمداً (docstatus > 0)
+    let buttons_visible = frm.doc.docstatus === 0;
+
     // --- زر الدخول ---
     const entry_wrapper = frm.get_field('entry').$wrapper;
-    entry_wrapper.html(`
-        <button class="btn btn-success btn-lg btn-block custom-action-btn" data-action="entry">
-            <i class="fa fa-sign-in mr-2"></i> ${__('Entry')}
-        </button>
-    `);
-    entry_wrapper.find('[data-action="entry"]').on('click', function() {
-        handle_action(frm, 'entry');
-    });
+    if (buttons_visible) {
+        entry_wrapper.html(`
+            <button class="btn btn-success btn-lg btn-block custom-action-btn" data-action="entry" title="${__('Submit this entry and open a new form')}">
+                <i class="fa fa-sign-in mr-2"></i> ${__('Entry')}
+            </button>
+        `);
+        entry_wrapper.find('[data-action="entry"]').on('click', function() {
+            handle_action(frm, 'entry');
+        });
+    } else {
+        entry_wrapper.empty(); // إزالة الزر إذا كان المستند معتمداً
+    }
+
 
     // --- زر الخروج ---
     const exit_wrapper = frm.get_field('exit').$wrapper;
-    exit_wrapper.html(`
-        <button class="btn btn-danger btn-lg btn-block custom-action-btn" data-action="exit">
-            <i class="fa fa-sign-out mr-2"></i> ${__('Exit')}
-        </button>
-    `);
-    exit_wrapper.find('[data-action="exit"]').on('click', function() {
-        handle_action(frm, 'exit');
-    });
+     if (buttons_visible) {
+        exit_wrapper.html(`
+            <button class="btn btn-danger btn-lg btn-block custom-action-btn" data-action="exit" title="${__('Submit, potentially create invoice, print receipt, and open new form')}">
+                <i class="fa fa-sign-out mr-2"></i> ${__('Exit')}
+            </button>
+        `);
+        exit_wrapper.find('[data-action="exit"]').on('click', function() {
+            handle_action(frm, 'exit');
+        });
+    } else {
+         exit_wrapper.empty();
+     }
 
     // --- زر الإعفاء ---
+    // (لا يزال يظهر حتى لو تم الاعتماد، لكن التفعيل/التعطيل يعتمد على حالة الحقل)
     const exemption_wrapper = frm.get_field('exemption').$wrapper;
+    // تصميم زر الإعفاء يعتمد على حالة exempt الحالية
+    let exempt_btn_class = frm.doc.exempt ? "btn-warning" : "btn-outline-warning"; // تغيير المظهر قليلاً
+    let exempt_icon = frm.doc.exempt ? "fa-check-circle" : "fa-circle-o";
     exemption_wrapper.html(`
-        <button class="btn btn-warning btn-lg btn-block custom-action-btn" data-action="exemption">
-            <i class="fa fa-check-circle mr-2"></i> ${__('Exemption')}
+        <button class="btn ${exempt_btn_class} btn-lg btn-block custom-action-btn" data-action="exemption" title="${__('Toggle exemption status')}">
+            <i class="fa ${exempt_icon} mr-2"></i> ${__('Exemption')}
         </button>
     `);
     exemption_wrapper.find('[data-action="exemption"]').on('click', function() {
+        // لا نسمح بتغيير الإعفاء بعد الاعتماد
+        if (frm.doc.docstatus !== 0) {
+             frappe.show_alert({message: __("Cannot change exemption status after submission."), indicator: "warning"});
+             return;
+        }
         handle_action(frm, 'exemption');
     });
 
-    // إضافة بعض الأنماط للأزرار إذا لزم الأمر
+
+    // إعادة تطبيق الأنماط (نفس الكود السابق)
     if (!$('#custom-action-btn-styles').length) {
         $('head').append(`
             <style id="custom-action-btn-styles">
                 .custom-action-btn {
                     font-weight: bold;
                     padding: 12px 15px;
+                    transition: background-color 0.2s ease, border-color 0.2s ease; /* انتقال سلس */
                 }
-                .custom-action-btn i {
-                    vertical-align: middle;
-                }
+                .custom-action-btn i { vertical-align: middle; }
             </style>
         `);
     }
 }
 
-// دالة لمعالجة أحداث الأزرار المخصصة
-function handle_action(frm, action_type) {
-    frappe.show_alert(`${__(action_type.charAt(0).toUpperCase() + action_type.slice(1))} action triggered.`);
-    console.log(`Action button clicked: ${action_type}`);
 
-    // المنطق الخاص بكل زر
+//----------------------------------------------------------------------------------
+// دالة لمعالجة أحداث الأزرار المخصصة
+//----------------------------------------------------------------------------------
+function handle_action(frm, action_type) {
+    console.log(`Action button clicked: ${action_type} for Doc: ${frm.doc.name}`);
+
+    // --- معالجة زر الدخول ---
     if (action_type === 'entry') {
         frm.set_value('status', 'Entered');
-        frappe.msgprint(`Perform Entry Action for document: ${frm.doc.name}`);
-    } else if (action_type === 'exit') {
-        frm.set_value('status', 'Exited');
-        frappe.msgprint(`Perform Exit Action for document: ${frm.doc.name}`);
-    } else if (action_type === 'exemption') {
-        frm.set_value('status', 'Exemption');
-        let current_exempt_status = frm.doc.exempt;
-        frm.set_value('exempt', current_exempt_status ? 0 : 1);
-        frm.refresh_field('exempt');
-
-        if (!current_exempt_status) {
-            frm.scroll_to_field('reason_for_exemption');
-            frm.get_field('reason_for_exemption').focus();
-            frappe.msgprint(__("Please enter the reason for exemption."));
+        // التأكد من أن المستند ليس جديداً ولم يتم اعتماده
+        if (frm.is_new()) {
+            frappe.msgprint(__("Please save the document before submitting."));
+            return;
         }
+        if (frm.doc.docstatus !== 0) {
+             frappe.msgprint(__("Document is already submitted."));
+             return;
+        }
+
+        // التأكد من وجود البيانات الأساسية (يمكن إضافة المزيد حسب الحاجة)
+        if (!frm.doc.customer || !frm.doc.item) {
+             frappe.throw(__("Customer and Item must be selected before Entry."));
+        }
+
+
+        frappe.confirm(
+            __('Are you sure you want to submit this entry?'),
+            () => {
+                // نعم، قم بالاعتماد وفتح مستند جديد
+                // frappe.ui.toolbar.show_progress(__('Submitting...'), 30); // إظهار مؤشر التقدم
+                frm.call({
+                    method: "handle_entry", // استدعاء دالة Python
+                    doc: frm.doc, // تمرير المستند الحالي للخادم
+                    callback: function(r) {
+                        // frappe.ui.toolbar.hide_progress(); // إخفاء مؤشر التقدم
+                        if (r.message && r.message.status === 'success') {
+                            // تم الاعتماد بنجاح
+                            frappe.show_alert({ message: __('Entry submitted successfully!'), indicator: 'green' }, 5);
+                            // فتح مستند جديد
+                            frappe.new_doc('Bus Gate control', true); // true لفتح فوري
+                        } else if (r.message && r.message.status === 'already_submitted') {
+                            // كان معتمداً بالفعل (للأمان، على الرغم من التحقق المسبق)
+                             frappe.new_doc('Bus Gate control', true);
+                        }
+                        // سيتم التعامل مع الأخطاء تلقائيًا بواسطة frappe.call
+                    },
+                    error: function() {
+                         frappe.ui.toolbar.hide_progress();
+                    }
+                });
+            },
+            () => {
+                // لا، لا تفعل شيئًا
+                frappe.show_alert({ message: __('Submission cancelled.'), indicator: 'info' });
+            }
+        );
+
+    }
+    // --- معالجة زر الخروج ---
+    else if (action_type === 'exit') {
+        frm.set_value('status', 'Exited');
+        if (frm.is_new()) {
+            frappe.msgprint(__("Please save the document before processing exit."));
+            return;
+        }
+         if (frm.doc.docstatus !== 0) {
+             frappe.msgprint(__("Exit process cannot be run on an already submitted document this way."));
+             return;
+        }
+         // التأكد من وجود البيانات الأساسية
+        if (!frm.doc.customer || !frm.doc.item) {
+             frappe.throw(__("Customer and Item must be selected before Exit."));
+        }
+
+        // التحقق من سبب الإعفاء إذا تم تحديده
+        if (frm.doc.exempt && !frm.doc.reason_for_exemption) {
+            frappe.msgprint({
+                title: __('Validation Error'),
+                indicator: 'red',
+                message: __("Reason for exemption is required when 'Exempt' is checked.")
+            });
+            frm.scroll_to_field('reason_for_exemption');
+            return; // إيقاف التنفيذ
+        }
+
+        frappe.confirm(
+            __('Are you sure you want to process the exit? This will submit the document and may create an invoice.'),
+            () => {
+                // نعم، قم بالاعتماد، إنشاء فاتورة (إذا لزم الأمر)، الطباعة، وفتح مستند جديد
+                // frappe.ui.toolbar.show_progress(__('Processing Exit...'), 30);
+                frm.call({
+                    method: "handle_exit", // استدعاء دالة Python
+                    doc: frm.doc,
+                    callback: function(r) {
+                        // frappe.ui.toolbar.hide_progress();
+                        if (r.message && r.message.status === 'success') {
+                            // نجحت العملية الأساسية (الاعتماد وإنشاء الفاتورة إذا لزم الأمر)
+                            let exit_message = __('Exit processed successfully!');
+                            if (r.message.sales_invoice_link) {
+                                exit_message += "<br>" + __("Sales Invoice created: {0}", [`<b>${r.message.sales_invoice_link}</b>`]);
+                            }
+                             frappe.show_alert({ message: exit_message, indicator: 'green' }, 7);
+
+                             // *** الطباعة ***
+                             // طباعة المستند الحالي (Bus Gate control)
+                             frappe.show_alert({ message: __('Preparing receipt for printing...'), indicator: 'info' }, 3);
+                             // استخدام مهلة قصيرة للتأكد من تحديث الواجهة قبل فتح مربع الطباعة
+                             setTimeout(() => {
+                                 try {
+                                    // استخدام اسم المستند الذي تم إرجاعه من الخادم للتأكد من الطباعة الصحيحة
+                                    // حتى لو حدث شيء أثناء الاستدعاء غير المتزامن
+                                    frappe.open_print_dialog('Bus Gate control', r.message.submitted_doc_name || frm.doc.name);
+                                 } catch(print_err) {
+                                     console.error("Print dialog error:", print_err);
+                                     frappe.msgprint(__("Could not open print dialog automatically. Please use the standard Print option."));
+                                 }
+
+                                 // *** فتح مستند جديد ***
+                                 // بعد محاولة الطباعة (أو فشلها)، افتح مستنداً جديداً
+                                 frappe.new_doc('Bus Gate control', true);
+
+                             }, 500); // تأخير 500 مللي ثانية
+
+                        }
+                         // سيتم التعامل مع الأخطاء تلقائيًا بواسطة frappe.call
+                    },
+                    error: function() {
+                         frappe.ui.toolbar.hide_progress();
+                    }
+                });
+            },
+            () => {
+                 frappe.show_alert({ message: __('Exit process cancelled.'), indicator: 'info' });
+            }
+        );
+
+    }
+    // --- معالجة زر الإعفاء ---
+    else if (action_type === 'exemption') {
+        frm.set_value('status', 'Exemption');
+         // لا يمكن التغيير بعد الاعتماد
+        if (frm.doc.docstatus !== 0) {
+             frappe.show_alert({message: __("Cannot change exemption status after submission."), indicator: "warning"});
+             return;
+        }
+
+        // تبديل حالة حقل الإعفاء
+        let current_exempt_status = frm.doc.exempt;
+        frm.set_value('exempt', current_exempt_status ? 0 : 1); // تبديل القيمة (0 أو 1)
+        frm.refresh_field('exempt'); // تحديث عرض الحقل Check
+
+        // تحديث زر الإعفاء ليعكس الحالة الجديدة
+        setup_custom_buttons(frm); // إعادة رسم الأزرار
+
+        // إذا تم تفعيل الإعفاء، قم بالتركيز على حقل السبب وتذكير المستخدم
+        if (!current_exempt_status) { // يعني أنه أصبح 1 الآن
+            frm.scroll_to_field('reason_for_exemption');
+            // استخدام مهلة قصيرة للتأكد من أن الحقل مرئي قبل التركيز عليه
+            setTimeout(() => {
+                 frm.get_field('reason_for_exemption').focus();
+                 frappe.show_alert({ message: __("Exemption enabled. Please enter the reason."), indicator: "info" });
+            }, 100);
+        } else {
+             frappe.show_alert({ message: __("Exemption disabled."), indicator: "info" });
+             // اختياري: مسح حقل السبب عند إلغاء الإعفاء
+             // frm.set_value('reason_for_exemption', '');
+        }
+        // لا نحفظ هنا، نترك المستخدم يحفظ أو يتم الحفظ عند الدخول/الخروج
     }
 }
 

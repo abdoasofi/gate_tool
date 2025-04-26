@@ -115,7 +115,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "frm.exempt == 1",
    "fieldname": "reason_for_exemption",
    "fieldtype": "Small Text",
    "label": "Reason For Exemption"
@@ -160,7 +159,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-27 01:10:45.164950",
+ "modified": "2025-04-27 01:57:43.084449",
  "modified_by": "Administrator",
  "module": "Gate Tool",
  "name": "Bus Gate control",
