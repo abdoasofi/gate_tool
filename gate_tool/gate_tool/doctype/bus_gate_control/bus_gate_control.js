@@ -467,8 +467,7 @@ function handle_action(frm, action_type) {
             }, 100);
         } else {
              frappe.show_alert({ message: __("Exemption disabled."), indicator: "info" });
-             // اختياري: مسح حقل السبب عند إلغاء الإعفاء
-             // frm.set_value('reason_for_exemption', '');
+             frm.set_value('reason_for_exemption', '');
         }
         // لا نحفظ هنا، نترك المستخدم يحفظ أو يتم الحفظ عند الدخول/الخروج
     }
