@@ -153,13 +153,14 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Entered\nExited\nExemption"
+   "options": "Entered\nExited\nExemption",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-27 01:08:32.891921",
+ "modified": "2025-04-27 01:10:45.164950",
  "modified_by": "Administrator",
  "module": "Gate Tool",
  "name": "Bus Gate control",

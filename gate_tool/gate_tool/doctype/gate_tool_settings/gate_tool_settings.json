@@ -5,20 +5,64 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "item_group"
+  "item_settings_section",
+  "item_group",
+  "roles_settings_section",
+  "entry_role",
+  "exit_role",
+  "column_break_vbls",
+  "exemption_role"
  ],
  "fields": [
   {
    "fieldname": "item_group",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Item Group",
-   "options": "Item Group"
+   "options": "Item Group",
+   "reqd": 1
+  },
+  {
+   "fieldname": "item_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Item Settings"
+  },
+  {
+   "fieldname": "roles_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Roles Settings"
+  },
+  {
+   "fieldname": "entry_role",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Entry Role",
+   "options": "Role",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_vbls",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "exit_role",
+   "fieldtype": "Link",
+   "label": "Exit Role",
+   "options": "Role",
+   "reqd": 1
+  },
+  {
+   "fieldname": "exemption_role",
+   "fieldtype": "Link",
+   "label": "Exemption Role",
+   "options": "Role",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-04-27 00:50:53.772384",
+ "modified": "2025-04-27 01:24:44.925905",
  "modified_by": "Administrator",
  "module": "Gate Tool",
  "name": "Gate Tool Settings",
