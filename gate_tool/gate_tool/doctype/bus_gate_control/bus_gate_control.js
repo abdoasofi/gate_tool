@@ -1,4 +1,3 @@
-// ... (الكود السابق: refresh, load_items, initialize_item_slider, fetch_item_price, fetch_standard_rate) ...
 // Copyright (c) 2025, Asofi and contributors
 // For license information, please see license.txt
 
@@ -33,125 +32,160 @@ frappe.ui.form.on("Bus Gate control", {
 });
 
 //----------------------------------------------------------------------------------
-// تحميل وعرض سلايدر الأصناف
+// تحميل وعرض الأصناف (مع التحقق من حالة المستند)
 //----------------------------------------------------------------------------------
 function load_items(frm) {
-    // إظهار مؤشر تحميل مؤقت
-    const items_wrapper = frm.get_field('items').$wrapper;
-    items_wrapper.html(`<div class="text-center text-muted p-4">${__("Loading Items...")}</div>`);
+    const container = frm.get_field('items').$wrapper;
+    container.html(`<div class="text-center text-muted p-4">${__("Loading Items...")}</div>`);
 
-    frappe.call({
-        doc: frm.doc,
-        method: "get_items",
-        callback: function(response) {
-            const items = response.message;
-            const container = frm.get_field('items').$wrapper;
-
-            if (!items || !items.length) {
-                container.html(`<div class="text-center text-muted p-4">${__("No items found.")}</div>`);
-                return;
-            }
-
-            const items_per_slide = 10;
-            let slider_html = `
-                <style>
-                    /* --- CSS لتخطيط الشبكة 5x2 داخل الشريحة --- */
-                    .item-slider-container .swiper-slide {
-                        display: grid; /* استخدام CSS Grid */
-                        grid-template-columns: repeat(5, 1fr); /* 5 أعمدة متساوية العرض */
-                        gap: 10px; /* المسافة بين العناصر (أفقياً وعمودياً) */
-                        padding: 15px 10px; /* هوامش داخلية للشريحة (أعلى/أسفل , يمين/يسار) */
-                        align-items: start; /* محاذاة العناصر لبداية صف الشبكة (لمنع التمدد غير المتساوي) */
-                        min-height: 220px; /* ارتفاع أدنى للشريحة لاستيعاب صفين بشكل أفضل (يمكن تعديله) */
-                    }
-                    /* --- تنسيق بطاقة العنصر لتناسب الشبكة --- */
-                    .item-slider-container .item-card {
-                        border: 1px solid #e0e0e0; /* تغيير لون الحدود قليلاً */
-                        border-radius: 6px; /* زيادة استدارة الزوايا */
-                        text-align: center;
-                        padding: 8px; /* تعديل الحشو الداخلي */
-                        background-color: #fff;
-                        cursor: pointer;
-                        transition: box-shadow 0.2s ease-in-out, transform 0.2s ease;
-                        display: flex; /* استخدام flex لتنظيم المحتوى الداخلي للبطاقة (الصورة والنص) */
-                        flex-direction: column; /* ترتيب المحتوى عمودياً */
-                        align-items: center; /* توسيط المحتوى أفقياً */
-                        justify-content: flex-start; /* محاذاة المحتوى للأعلى */
-                        overflow: hidden; /* لإخفاء أي تجاوز */
-                    }
-                    .item-slider-container .item-card:hover {
-                        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-                        transform: translateY(-2px); /* تأثير رفع طفيف عند المرور */
-                    }
-                    .item-slider-container .item-card img {
-                        max-width: 100%;
-                        height: 65px; /* تعديل ارتفاع الصورة قليلاً */
-                        object-fit: contain;
-                        margin-bottom: 8px; /* زيادة المسافة تحت الصورة */
-                    }
-                    .item-slider-container .item-card .item-name {
-                        font-size: 0.8rem; /* تعديل حجم الخط */
-                        font-weight: 500; /* تعديل وزن الخط */
-                        color: #333;
-                        line-height: 1.3; /* تحسين تباعد الأسطر */
-                        /* السماح بـ سطرين كحد أقصى للنص */
-                        display: -webkit-box;
-                        -webkit-line-clamp: 2;
-                        -webkit-box-orient: vertical;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        min-height: 2.6em; /* حجز مساحة لسطرين تقريباً */
-                    }
-                    .item-slider-container .swiper-button-next,
-                    .item-slider-container .swiper-button-prev {
-                        color: #007bff; /* لون أزرار التنقل */
-                        transform: scale(0.8); /* تصغير حجم الأزرار قليلاً */
-                    }
-                    .item-slider-container .swiper-pagination-bullet-active {
-                        background: #007bff; /* لون نقطة الترقيم النشطة */
-                    }
-                    .item-slider-container .swiper-container {
-                        padding-bottom: 30px; /* إضافة مساحة سفلية لنقاط الترقيم */
-                    }
-                </style>
-                <div class="swiper-container item-slider-container">
-                    <div class="swiper-wrapper" id="item-container">
-                    </div>
-                    <!-- أزرار التنقل -->
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                    <!-- الترقيم -->
-                    <div class="swiper-pagination"></div>
-                </div>
-            `;
-            container.html(slider_html);
-            const itemContainer = container.find('#item-container');
-
-            // تقسيم الأصناف إلى مجموعات (شرائح) 
-            for (let i = 0; i < items.length; i += items_per_slide) {
-                const chunk = items.slice(i, i + items_per_slide);
-                let slide_content = '';
-                chunk.forEach(function(item) {
+    // التحقق من حالة المستند والصنف المحدد
+    if (frm.doc.docstatus === 1 && frm.doc.item) {
+        console.log("Document submitted, loading only selected item:", frm.doc.item);
+        frappe.call({
+            method: "get_selected_item_details",
+            doc: frm.doc,
+            args: {
+                item_code: frm.doc.item
+            },
+            callback: function(r) {
+                const item = r.message;
+                if (item) {
+                    // عرض بطاقة الصنف المحدد فقط (بدون سلايدر)
                     const imageUrl = item.image || '/assets/frappe/images/fallback-image.png';
-                    slide_content += `
-                        <div class="item-card" data-item_code="${item.name}" title="${item.item_name || item.name}">
-                            <img src="${imageUrl}" alt="${item.item_name || item.name}">
-                            <div class="item-name">${item.item_name || item.name}</div>
+                    const selected_item_html = `
+                        <style>
+                            .selected-item-display {
+                                display: flex;
+                                justify-content: center; /* توسيط أفقي */
+                                align-items: center; /* توسيط عمودي */
+                                padding: 20px;
+                                background-color: #f8f9fa; /* خلفية رمادية فاتحة */
+                                border: 1px solid #dee2e6;
+                                border-radius: 6px;
+                                margin-top: 10px;
+                            }
+                            .selected-item-display .item-card {
+                                /* استخدام نفس تنسيق البطاقة ولكن بدون مؤشر الماوس */
+                                border: 1px solid #e0e0e0;
+                                border-radius: 6px;
+                                text-align: center;
+                                padding: 15px; /* زيادة الحشو قليلاً */
+                                background-color: #fff;
+                                cursor: default !important; /* التأكيد على عدم وجود مؤشر */
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: flex-start;
+                                overflow: hidden;
+                                width: 150px; /* تحديد عرض ثابت للبطاقة المعروضة */
+                                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                            }
+                             .selected-item-display .item-card:hover {
+                                 /* إزالة أي تأثيرات hover */
+                                 box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                                 transform: none;
+                             }
+                            .selected-item-display .item-card img {
+                                max-width: 100%;
+                                height: 80px; /* تعديل الارتفاع قليلاً */
+                                object-fit: contain;
+                                margin-bottom: 10px;
+                            }
+                            .selected-item-display .item-card .item-name {
+                                font-size: 0.9rem; /* تكبير الخط قليلاً */
+                                font-weight: 600;
+                                color: #333;
+                                line-height: 1.3;
+                                /* يمكن إزالة تحديد الأسطر إذا أردت عرض الاسم كاملاً */
+                                display: -webkit-box;
+                                -webkit-line-clamp: 3; /* السماح بـ 3 أسطر مثلاً */
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                        </style>
+                        <div class="selected-item-display">
+                            <div class="item-card" title="${item.item_name || item.name} (${__('Selected')})">
+                                <img src="${imageUrl}" alt="${item.item_name || item.name}">
+                                <div class="item-name">${item.item_name || item.name}</div>
+                            </div>
                         </div>
                     `;
-                });
-                itemContainer.append(`<div class="swiper-slide">${slide_content}</div>`);
+                    container.html(selected_item_html);
+                } else {
+                    // إذا لم يتم العثور على تفاصيل الصنف المحدد لسبب ما
+                    container.html(`<div class="text-center text-danger p-4">${__("Could not load details for the selected item:")} ${frm.doc.item}</div>`);
+                }
+            },
+            error: function(err) {
+                 console.error("Error fetching selected item details:", err);
+                 container.html(`<div class="text-center text-danger p-4">${__("Error loading selected item details.")}</div>`);
             }
+        });
 
-            // تهيئة سلايدر العناصر بعد إضافة كل الشرائح 
-            initialize_item_slider(frm, container);
+    } else if (frm.doc.docstatus === 1 && !frm.doc.item) {
+        // --- الحالة: المستند معتمد ولكن لا يوجد صنف محدد (حالة نادرة) ---
+        container.html(`<div class="text-center text-muted p-4">${__("No item was selected for this record.")}</div>`);
 
-        },
-        error: function(error) {
-            console.error("Error loading items: ", error);
-            frm.get_field('items').$wrapper.html(`<div class="text-center text-danger p-4">${__("Error loading items.")}</div>`);
-        }
-    });
+    } else {
+        frappe.call({
+            doc: frm.doc,
+            method: "get_items",
+            callback: function(response) {
+                const items = response.message;
+                if (!items || !items.length) {
+                    container.html(`<div class="text-center text-muted p-4">${__("No items found.")}</div>`);
+                    return;
+                }
+
+                // بناء HTML السلايدر التفاعلي
+                const items_per_slide = 10;
+                let slider_html = `
+                    <style>
+                        .item-slider-container .swiper-slide { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 15px 10px; align-items: start; min-height: 220px; }
+                        .item-slider-container .item-card { border: 1px solid #e0e0e0; border-radius: 6px; text-align: center; padding: 8px; background-color: #fff; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; overflow: hidden; }
+                        .item-slider-container .item-card:hover { box-shadow: 0 6px 12px rgba(0,0,0,0.15); transform: translateY(-2px); }
+                        .item-slider-container .item-card img { max-width: 100%; height: 65px; object-fit: contain; margin-bottom: 8px; }
+                        .item-slider-container .item-card .item-name { font-size: 0.8rem; font-weight: 500; color: #333; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; min-height: 2.6em; }
+                        .item-slider-container .swiper-button-next, .item-slider-container .swiper-button-prev { color: #007bff; transform: scale(0.8); }
+                        .item-slider-container .swiper-pagination-bullet-active { background: #007bff; }
+                        .item-slider-container .swiper-container { padding-bottom: 30px; }
+                    </style>
+                    <div class="swiper-container item-slider-container">
+                        <div class="swiper-wrapper" id="item-container"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                `;
+                container.html(slider_html);
+                const itemContainer = container.find('#item-container');
+
+                // تقسيم الأصناف إلى شرائح 
+                for (let i = 0; i < items.length; i += items_per_slide) {
+                    const chunk = items.slice(i, i + items_per_slide);
+                    let slide_content = '';
+                    chunk.forEach(function(item) {
+                        const imageUrl = item.image || '/assets/frappe/images/fallback-image.png';
+                        slide_content += `
+                            <div class="item-card" data-item_code="${item.name}" title="${item.item_name || item.name}">
+                                <img src="${imageUrl}" alt="${item.item_name || item.name}">
+                                <div class="item-name">${item.item_name || item.name}</div>
+                            </div>
+                        `;
+                    });
+                    itemContainer.append(`<div class="swiper-slide">${slide_content}</div>`);
+                }
+
+                initialize_item_slider(frm, container);
+
+            },
+            error: function(error) {
+                console.error("Error loading items for draft document: ", error);
+                container.html(`<div class="text-center text-danger p-4">${__("Error loading items.")}</div>`);
+            }
+        });
+    } 
 }
 
 /**
