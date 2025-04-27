@@ -237,3 +237,35 @@ class BusGatecontrol(Document):
 		except Exception as e:
 			frappe.log_error(f"Error fetching roles from {settings_doctype}: {e}", _("Bus Gate Control Settings Error"))
 			return {}
+
+	# --- دالة لجلب تفاصيل صنف واحد فقط ---
+	@frappe.whitelist()
+	def get_selected_item_details(self, item_code):
+		"""
+		تجلب تفاصيل صنف واحد محدد بالاسم (الكود).
+		"""
+		if not item_code:
+			return None
+
+		try:
+			item_details = frappe.get_all(
+				'Item',
+				filters={'name': item_code},
+				fields=['name', 'item_name', 'image'],
+				limit=1
+			)
+
+			if not item_details:
+				return None
+			item = item_details[0]
+			if item.image:
+				if not item.image.startswith(('/files/', 'http://', 'https://')):
+					item.image = f"/files/{item.image.lstrip('/')}"
+			else:
+				item.image = '/assets/frappe/images/fallback-image.png'
+
+			return item
+
+		except Exception as e:
+			frappe.log_error(f"Error fetching details for selected item {item_code}: {e}", _("Bus Gate Control Error"))
+			return None
