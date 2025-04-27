@@ -130,7 +130,6 @@ class BusGatecontrol(Document):
 					indicator="green"
 				)
 
-
 			# 3. إرجاع الحالة للـ JavaScript (مع رابط الفاتورة إذا تم إنشاؤها)
 			return {
 				"status": "success",
@@ -148,34 +147,16 @@ class BusGatecontrol(Document):
 		"""
 		ينشئ ويرسل فاتورة مبيعات بناءً على بيانات مستند Bus Gate control الحالي.
 		"""
-		# قد تحتاج لتعديل الحسابات الافتراضية والشركة بناءً على إعداداتك
 		company =  frappe.defaults.get_user_default("company")
 		if not company:
 			frappe.throw(_("Default Company not set for User {0} or in the document.").format(frappe.session.user))
-
-		# يمكنك جعل هذه الحسابات قابلة للتكوين في الإعدادات إذا أردت
-		# debit_to_account = frappe.get_cached_value('Company', company, 'default_receivable_account')
-		# income_account = frappe.get_cached_value('Company', company, 'default_income_account')
-		# # حاول الحصول على حساب الدخل من مجموعة الصنف أو الصنف نفسه كأولوية
-		# item_income_account = frappe.db.get_value("Item", self.item, "income_account")
-		# if item_income_account:
-		# 	income_account = item_income_account
-		# else:
-		# 	item_group_income_account = frappe.db.get_value("Item Group", frappe.db.get_value("Item", self.item, "item_group"), "income_account")
-		# 	if item_group_income_account:
-		# 		income_account = item_group_income_account
-
-		# if not debit_to_account:
-		# 	frappe.throw(_("Default Receivable Account not set in Company: {0}").format(company))
-		# if not income_account:
-		# 	frappe.throw(_("Default Income Account not set in Company or Item/Item Group for Item: {0}").format(self.item))
 
 		# إنشاء مستند فاتورة المبيعات
 		si = frappe.new_doc("Sales Invoice")
 		si.customer = self.customer
 		si.company = company
 		si.posting_date = nowdate()
-		si.due_date = nowdate() # فاتورة مدفوعة، تاريخ الاستحقاق هو نفس تاريخ الإنشاء
+		si.due_date = nowdate()
 		si.currency = frappe.get_cached_value('Company', company, 'default_currency')
 		si.selling_price_list = self.price_list
 
@@ -187,10 +168,8 @@ class BusGatecontrol(Document):
 			"rate": self.price,
 			# "income_account": income_account,
 			"cost_center": frappe.get_cached_value('Company', company, 'cost_center'),
-			# قد تحتاج لإضافة "warehouse" إذا كان الصنف يتطلب ذلك وكان update_stock=1
 		})
 
-		# --- تعليم الفاتورة كمدفوعة (طرق مختلفة) ---
 		# الطريقة 1: استخدام is_pos (يعتمد على إعدادات POS)
 		si.is_pos = 1
 		# قد تحتاج لتحديد Mode of Payment و حساب الدفع إذا كان is_pos يتطلب ذلك
@@ -204,12 +183,10 @@ class BusGatecontrol(Document):
 			})
 
 
-		# الطريقة 2: (أكثر تعقيدًا) إنشاء Payment Entry بعد إرسال الفاتورة
-
 		# --- ---
 
-		si.update_stock = 0 # نفترض أن هذه الخدمة لا تؤثر على المخزون
-		si.set_posting_time = 1 # تسجيل وقت الإنشاء
+		si.update_stock = 0
+		si.set_posting_time = 1
 
 		# حساب الضرائب والإجماليات
 		si.run_method("set_missing_values")
@@ -222,8 +199,7 @@ class BusGatecontrol(Document):
 			si.submit()
 			return si
 		except frappe.PermissionError:
-			# إذا فشلت الصلاحيات، حاول مع تجاهل الصلاحيات (يتطلب صلاحيات مسؤول للنظام)
-			frappe.log_warning(f"Permission error submitting Sales Invoice for {self.name}. Retrying with ignore_permissions=True.")
+			frappe.throw(f"Permission error submitting Sales Invoice for {self.name}. Retrying with ignore_permissions=True.")
 			si.insert(ignore_permissions=True)
 			si.submit()
 			return si
@@ -231,3 +207,33 @@ class BusGatecontrol(Document):
 			frappe.log_error(f"Error creating/submitting Sales Invoice for Bus Gate {self.name}: {invoice_error}")
 			frappe.throw(_("Failed to create or submit Sales Invoice. Error: {0}").format(str(invoice_error)))
 
+
+	# --- دالة لجلب أدوار الأزرار من الإعدادات ---
+	@frappe.whitelist()
+	def get_button_roles(self):
+		"""
+		تجلب الأدوار المحددة لأزرار الدخول، الخروج، والإعفاء من Gate Tool Settings.
+		"""
+		settings_doctype = "Gate Tool Settings"
+		settings_name = settings_doctype
+
+		entry_role_field = "entry_role"
+		exit_role_field = "exit_role"
+		exemption_role_field = "exemption_role"
+
+		try:
+			roles = frappe.get_value(
+				settings_doctype,
+				settings_name,
+				[entry_role_field, exit_role_field, exemption_role_field],
+				as_dict=True
+			)
+
+			if not roles:
+				frappe.throw(f"{settings_doctype} not found or fields are missing.", "Bus Gate Control Setup")
+				return {}
+			return roles
+
+		except Exception as e:
+			frappe.log_error(f"Error fetching roles from {settings_doctype}: {e}", _("Bus Gate Control Settings Error"))
+			return {}

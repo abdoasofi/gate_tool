@@ -7,17 +7,29 @@ frappe.ui.form.on("Bus Gate control", {
         // استدعاء تحميل الأصناف عند تحديث الفورم
         load_items(frm);
 
-        // تصميم وإضافة الأزرار المخصصة
-        setup_custom_buttons(frm);
-
-        // يمكنك إضافة أي منطق آخر لـ refresh هنا
+        // --- جلب أدوار الأزرار من الإعدادات ---
+        frappe.call({
+            method: "get_button_roles",
+            doc:frm.doc,
+            callback: function(r) {
+                let button_roles = {};
+                if (r.message) {
+                    button_roles = r.message;
+                    console.log("Button roles fetched:", button_roles); // للتصحيح
+                } else {
+                        console.warn("Could not fetch button roles from settings.");
+                }
+                // استدعاء تصميم الأزرار وتمرير الأدوار المطلوبة
+                setup_custom_buttons(frm, button_roles);
+            },
+            error: function(err) {
+                    console.error("Error fetching button roles:", err);
+                    // حتى في حالة الخطأ، استدع تصميم الأزرار (ستظهر بشكل افتراضي أو لا تظهر)
+                    setup_custom_buttons(frm, {});
+                }
+            });
     },
 
-    // يمكنك إضافة معالجات أحداث أخرى هنا إذا لزم الأمر
-    // مثال: عند تغيير العميل، قد ترغب في إعادة تحميل الأصناف إذا كانت تعتمد عليه
-    // customer(frm) {
-    //     load_items(frm);
-    // }
 });
 
 //----------------------------------------------------------------------------------
@@ -231,77 +243,96 @@ function initialize_item_slider(frm, container) {
 //----------------------------------------------------------------------------------
 // تصميم وإضافة الأزرار المخصصة (الدخول، الخروج، الإعفاء)
 //----------------------------------------------------------------------------------
-function setup_custom_buttons(frm) {
-    // إخفاء الأزرار إذا كان المستند معتمداً (docstatus > 0)
-    let buttons_visible = frm.doc.docstatus === 0;
+/**
+ * يقوم بإعداد أزرار الإجراءات المخصصة مع التحقق من الأدوار.
+ * @param {object} frm
+ * @param {object} button_roles
+ */
+function setup_custom_buttons(frm, button_roles) {
+    // حالة المستند (يجب أن يكون غير معتمد لإظهار أزرار الدخول/الخروج)
+    const doc_is_submittable = frm.doc.docstatus === 0;
+    // أدوار المستخدم الحالي
+    const user_roles = frappe.user.roles;
+    // التحقق مما إذا كان المستخدم مدير نظام (له صلاحيات كاملة عادةً)
+    const is_admin = frappe.user.has_role("System Manager");
+
+    // --- وظيفة مساعدة للتحقق من الدور ---
+    // تتحقق إذا كان المستخدم يمتلك الدور المطلوب أو إذا كان مديراً
+    // أو إذا لم يتم تحديد دور مطلوب (يعتبر مسموحًا للجميع في هذه الحالة)
+    const check_role_permission = (required_role) => {
+        // if (is_admin) return true; // المدير مسموح له دائمًا
+        // if (!required_role) return true; // إذا لم يتم تحديد دور في الإعدادات، اسمح للجميع
+        return frappe.user.has_role(required_role); // تحقق إذا كان المستخدم يمتلك الدور
+    };
 
     // --- زر الدخول ---
-    const entry_wrapper = frm.get_field('entry').$wrapper;
-    if (buttons_visible) {
+    const entry_wrapper = frm.get_field('entry').$wrapper.empty(); // مسح المحتوى السابق
+    const required_entry_role = button_roles?.entry_role; // استخدام Optional Chaining
+    const can_show_entry = doc_is_submittable && check_role_permission(required_entry_role);
+
+    if (can_show_entry) {
         entry_wrapper.html(`
             <button class="btn btn-success btn-lg btn-block custom-action-btn" data-action="entry" title="${__('Submit this entry and open a new form')}">
                 <i class="fa fa-sign-in mr-2"></i> ${__('Entry')}
             </button>
         `);
-        entry_wrapper.find('[data-action="entry"]').on('click', function() {
-            handle_action(frm, 'entry');
-        });
-    } else {
-        entry_wrapper.empty(); // إزالة الزر إذا كان المستند معتمداً
+        entry_wrapper.find('[data-action="entry"]').on('click', () => handle_action(frm, 'entry'));
     }
 
 
     // --- زر الخروج ---
-    const exit_wrapper = frm.get_field('exit').$wrapper;
-     if (buttons_visible) {
+    const exit_wrapper = frm.get_field('exit').$wrapper.empty();
+    const required_exit_role = button_roles?.exit_role;
+    const can_show_exit = doc_is_submittable && check_role_permission(required_exit_role);
+
+     if (can_show_exit) {
         exit_wrapper.html(`
             <button class="btn btn-danger btn-lg btn-block custom-action-btn" data-action="exit" title="${__('Submit, potentially create invoice, print receipt, and open new form')}">
                 <i class="fa fa-sign-out mr-2"></i> ${__('Exit')}
             </button>
         `);
-        exit_wrapper.find('[data-action="exit"]').on('click', function() {
-            handle_action(frm, 'exit');
-        });
-    } else {
-         exit_wrapper.empty();
-     }
+        exit_wrapper.find('[data-action="exit"]').on('click', () => handle_action(frm, 'exit'));
+    }
+
 
     // --- زر الإعفاء ---
-    // (لا يزال يظهر حتى لو تم الاعتماد، لكن التفعيل/التعطيل يعتمد على حالة الحقل)
-    const exemption_wrapper = frm.get_field('exemption').$wrapper;
-    // تصميم زر الإعفاء يعتمد على حالة exempt الحالية
-    let exempt_btn_class = frm.doc.exempt ? "btn-warning" : "btn-outline-warning"; // تغيير المظهر قليلاً
+    // يظهر زر الإعفاء دائمًا (لتبديل الحالة)، لكن النقر عليه قد يتطلب دورًا
+    const exemption_wrapper = frm.get_field('exemption').$wrapper.empty();
+    const required_exemption_role = button_roles?.exemption_role;
+    const can_toggle_exemption = check_role_permission(required_exemption_role);
+
+    // تصميم الزر يعتمد على حالة exempt الحالية
+    let exempt_btn_class = frm.doc.exempt ? "btn-warning" : "btn-outline-warning";
     let exempt_icon = frm.doc.exempt ? "fa-check-circle" : "fa-circle-o";
     exemption_wrapper.html(`
         <button class="btn ${exempt_btn_class} btn-lg btn-block custom-action-btn" data-action="exemption" title="${__('Toggle exemption status')}">
             <i class="fa ${exempt_icon} mr-2"></i> ${__('Exemption')}
         </button>
     `);
+
+    // إضافة معالج النقر مع التحقق من الدور وحالة المستند
     exemption_wrapper.find('[data-action="exemption"]').on('click', function() {
-        // لا نسمح بتغيير الإعفاء بعد الاعتماد
-        if (frm.doc.docstatus !== 0) {
-             frappe.show_alert({message: __("Cannot change exemption status after submission."), indicator: "warning"});
+        if (!doc_is_submittable) {
+            frappe.show_alert({message: __("Cannot change exemption status after submission."), indicator: "warning"});
+            return;
+        }
+        // التحقق من الدور المطلوب لـ *تغيير* حالة الإعفاء
+        if (!can_toggle_exemption) {
+             frappe.throw(__("You do not have permission to change the exemption status. Required role: {0}", [required_exemption_role || _('Not Specified')]));
              return;
         }
+        // إذا كان لديه الصلاحية، نفذ الإجراء
         handle_action(frm, 'exemption');
     });
 
 
-    // إعادة تطبيق الأنماط (نفس الكود السابق)
+    // --- إعادة تطبيق الأنماط --- (الكود كما هو)
     if (!$('#custom-action-btn-styles').length) {
         $('head').append(`
-            <style id="custom-action-btn-styles">
-                .custom-action-btn {
-                    font-weight: bold;
-                    padding: 12px 15px;
-                    transition: background-color 0.2s ease, border-color 0.2s ease; /* انتقال سلس */
-                }
-                .custom-action-btn i { vertical-align: middle; }
-            </style>
+            <style id="custom-action-btn-styles"> /* ... */ </style>
         `);
     }
 }
-
 
 //----------------------------------------------------------------------------------
 // دالة لمعالجة أحداث الأزرار المخصصة
