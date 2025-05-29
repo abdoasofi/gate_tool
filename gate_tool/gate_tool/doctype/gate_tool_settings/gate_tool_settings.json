@@ -7,11 +7,9 @@
  "field_order": [
   "item_settings_section",
   "item_group",
-  "roles_settings_section",
-  "entry_role",
-  "exit_role",
-  "column_break_vbls",
-  "exemption_role"
+  "print_format_exemption",
+  "column_break_niwq",
+  "print_format_exit"
  ],
  "fields": [
   {
@@ -28,41 +26,26 @@
    "label": "Item Settings"
   },
   {
-   "fieldname": "roles_settings_section",
-   "fieldtype": "Section Break",
-   "label": "Roles Settings"
-  },
-  {
-   "fieldname": "entry_role",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Entry Role",
-   "options": "Role",
-   "reqd": 1
-  },
-  {
-   "fieldname": "column_break_vbls",
+   "fieldname": "column_break_niwq",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "exit_role",
+   "fieldname": "print_format_exit",
    "fieldtype": "Link",
-   "label": "Exit Role",
-   "options": "Role",
-   "reqd": 1
+   "label": "Print Format Exit",
+   "options": "Print Format"
   },
   {
-   "fieldname": "exemption_role",
+   "fieldname": "print_format_exemption",
    "fieldtype": "Link",
-   "label": "Exemption Role",
-   "options": "Role",
-   "reqd": 1
+   "label": "Print Format Exemption",
+   "options": "Print Format"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-04-27 01:24:44.925905",
+ "modified": "2025-05-29 17:20:18.152295",
  "modified_by": "Administrator",
  "module": "Gate Tool",
  "name": "Gate Tool Settings",

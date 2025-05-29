@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"zZXrZgkSSa\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">BUS STATION</span>\",\"col\":12}},{\"id\":\"fH_4SBMTug\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Bus Gate control\",\"col\":3}},{\"id\":\"E85g9xTgR3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Gate Tool Settings\",\"col\":3}},{\"id\":\"19qdJjV_g8\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"bus-exit\",\"col\":3}},{\"id\":\"dgsvXB0HRy\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"bus-entry\",\"col\":3}}]",
+ "content": "[{\"id\":\"zZXrZgkSSa\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">BUS STATION</span>\",\"col\":12}},{\"id\":\"fH_4SBMTug\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Bus Gate control\",\"col\":3}},{\"id\":\"E85g9xTgR3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Gate Tool Settings\",\"col\":3}},{\"id\":\"19qdJjV_g8\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"\u062a\u0633\u062c\u064a\u0644 \u062e\u0631\u0648\u062c \u0627\u0644\u0628\u0627\u0635\",\"col\":3}},{\"id\":\"dgsvXB0HRy\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"\u062a\u0633\u062c\u064a\u0644 \u062f\u062e\u0648\u0644 \u0627\u0644\u0628\u0627\u0635\",\"col\":3}}]",
  "creation": "2025-04-27 02:31:15.430553",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "is_hidden": 0,
  "label": "BUS STATION",
  "links": [],
- "modified": "2025-05-29 16:10:41.885679",
+ "modified": "2025-05-29 17:30:35.131787",
  "modified_by": "Administrator",
  "module": "Gate Tool",
  "name": "BUS STATION",
@@ -28,15 +28,8 @@
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "bus-exit",
+   "label": "\u062a\u0633\u062c\u064a\u0644 \u062e\u0631\u0648\u062c \u0627\u0644\u0628\u0627\u0635",
    "link_to": "bus-exit",
-   "type": "Page"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "bus-entry",
-   "link_to": "bus-entry",
    "type": "Page"
   },
   {
@@ -53,6 +46,13 @@
    "label": "Gate Tool Settings",
    "link_to": "Gate Tool Settings",
    "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "\u062a\u0633\u062c\u064a\u0644 \u062f\u062e\u0648\u0644 \u0627\u0644\u0628\u0627\u0635",
+   "link_to": "bus-entry",
+   "type": "Page"
   }
  ],
  "title": "BUS STATION"
