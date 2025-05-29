@@ -10,19 +10,12 @@
   "date_and_taime",
   "column_break_stwt",
   "customer",
-  "section_break_hrzo",
-  "items",
   "section_break_nshx",
   "item",
   "customer_group",
   "column_break_jfhs",
   "price",
   "price_list",
-  "section_break_mldm",
-  "entry",
-  "exit",
-  "column_break_aazm",
-  "exemption",
   "section_break_xdmg",
   "column_break_xjgc",
   "exempt",
@@ -62,15 +55,6 @@
    "label": "Customer",
    "options": "Customer",
    "reqd": 1
-  },
-  {
-   "fieldname": "section_break_hrzo",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "items",
-   "fieldtype": "HTML",
-   "label": "Items"
   },
   {
    "fieldname": "section_break_nshx",
@@ -130,29 +114,6 @@
    "label": "Exempt"
   },
   {
-   "fieldname": "section_break_mldm",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "entry",
-   "fieldtype": "HTML",
-   "label": "Entry"
-  },
-  {
-   "fieldname": "exit",
-   "fieldtype": "HTML",
-   "label": "Exit"
-  },
-  {
-   "fieldname": "column_break_aazm",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "exemption",
-   "fieldtype": "HTML",
-   "label": "Exemption"
-  },
-  {
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
@@ -163,7 +124,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-27 03:29:45.219653",
+ "modified": "2025-05-29 14:24:01.867798",
  "modified_by": "Administrator",
  "module": "Gate Tool",
  "name": "Bus Gate control",
