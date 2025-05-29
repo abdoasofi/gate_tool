@@ -1,0 +1,61 @@
+.bus-exit-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Cairo', sans-serif;
+}
+
+.customer-section {
+    align-self: flex-end;
+    margin-bottom: 20px;
+}
+
+#customer-select {
+    width: 400px;
+    height: 50px;
+    font-size: 18px;
+}
+
+.items-section {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.item-card {
+    width: 140px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.item-card.selected {
+    border: 3px solid green;
+    background: #e0ffe0;
+}
+
+.item-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+
+.print-section {
+    margin-top: 20px;
+}
+
+#print-btn {
+    background-color: #28a745;
+    color: white;
+    font-size: 20px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
