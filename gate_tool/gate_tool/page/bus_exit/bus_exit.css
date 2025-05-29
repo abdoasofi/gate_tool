@@ -60,17 +60,10 @@
 }
 
 .selection-grid {
-    display: grid;
-    grid-template-columns: 1fr; /* عمود واحد للهواتف والشاشات الصغيرة */
-    gap: 30px;
-    margin-bottom: 35px; /* زيادة المسافة السفلية */
-}
-
-/* تخطيط لعمودين للشاشات الأكبر */
-@media (min-width: 992px) { /* تغيير نقطة الانتقال إلى 992px لتناسب أفضل */
-    .selection-grid {
-        grid-template-columns: 380px 1fr; /* تعديل عرض عمود العميل */
-    }
+    display: flex; /* استخدام Flexbox للتحكم في الترتيب العمودي */
+    flex-direction: column; /* جعل العناصر تترتب عمودياً */
+    gap: 30px; /* المسافة بين قسم العميل وقسم الأصناف */
+    margin-bottom: 35px;
 }
 
 .section {
@@ -148,15 +141,21 @@
 /* تصميم بطاقات الأصناف */
 .items-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* زيادة العرض الأدنى للبطاقة */
-    gap: 20px;
-    max-height: 450px; /* تعديل الارتفاع الأقصى إذا لزم الأمر */
+    /* تعديل لعرض 5 أعمدة بشكل افتراضي، مع الحفاظ على التجاوب للشاشات الأصغر */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* للشاشات الصغيرة جداً */
+    /* media query لتطبيق 5 أعمدة على الشاشات الأكبر */
+    /* يمكنك تعديل 768px أو 992px حسب ما تراه مناسباً كنقطة انتقال */
+    @media (min-width: 992px) { /* أو 768px أو 1200px */
+        grid-template-columns: repeat(5, 1fr); /* 5 أعمدة متساوية العرض */
+    }
+    gap: 15px; /* يمكن تقليل المسافة قليلاً إذا لزم الأمر لاستيعاب 5 بطاقات */
+    max-height: 450px;
     overflow-y: auto;
-    padding: 15px; /* زيادة الحشو */
+    padding: 15px;
     border: 1px solid var(--medium-gray);
     border-radius: var(--border-radius);
-    background-color: #fff; /* خلفية بيضاء لمنطقة الأصناف */
-    flex-grow: 1; /* لتأخذ المساحة المتاحة في القسم */
+    background-color: #fff;
+    flex-grow: 1;
 }
 
 .item-card-enhanced {
@@ -397,4 +396,30 @@
     .selection-grid, .summary-and-action-section {
         gap: 20px; /* تقليل المسافات */
     }
+}
+
+
+/* تنسيقات إضافية للأيقونات الجديدة */
+.page-icon-main {
+    margin-right: 15px; /* أو margin-left إذا كنت تريدها على اليمين في RTL */
+    font-size: 2.3rem; /* تعديل الحجم ليتناسب مع العنوان الرئيسي */
+    color: var(--primary-color); /* لون الأيقونة الرئيسية */
+}
+
+.section-icon {
+    margin-right: 10px; /* أو margin-left */
+    font-size: 1.2em; /* حجم نسبي لعنوان القسم */
+    color: inherit; /* لترث لون الـ label */
+    opacity: 0.8;
+}
+
+.price-icon {
+    margin-right: 8px; /* أو margin-left */
+    font-size: 0.9em; /* حجم نسبي للنص المحيط */
+    color: var(--secondary-color); /* لون مميز لأيقونة السعر */
+}
+
+.button-main-icon {
+    font-size: 1.1em; /* حجم نسبي لنص الزر */
+    /* margin-right: 8px;  موجودة بالفعل في كلاس .button-icon */
 }

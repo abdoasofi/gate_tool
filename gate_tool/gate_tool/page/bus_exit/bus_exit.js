@@ -1,18 +1,35 @@
 // bus_exit.js
 frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
+    // --- إضافة Font Awesome CSS إذا لم تكن موجودة ---
+    // هذا يتحقق مما إذا كان هناك بالفعل وسم link أو script يشير إلى fontawesome
+    // لتجنب إضافة الرابط عدة مرات.
+    if (!$('link[href*="fontawesome"]').length && !$('script[src*="fontawesome"]').length && !$('link[href*="all.min.css"]').length) {
+        // استخدام CDN كمثال. يمكنك استبداله بمسار محلي إذا كانت الملفات مستضافة لديك.
+        // تأكد من استخدام إصدار متوافق مع Frappe (غالبًا Font Awesome 5.x)
+        let fontAwesomeCdnLink = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css';
+        let linkTag = $(`<link rel="stylesheet" href="${fontAwesomeCdnLink}">`);
+        $('head').append(linkTag);
+        console.log("Font Awesome 5 CSS link added from CDN:", fontAwesomeCdnLink);
+    }
+    // --- نهاية إضافة Font Awesome ---
+
     let wrapper = $(wrapper_element);
     wrapper.empty().addClass('bus-exit-page-font');
 
     let html_content = `
         <div class="bus-exit-page-container">
             <div class="page-header">
-                <h1 class="page-title"><i class="fas fa-bus-alt"></i> تسجيل خروج الباص</h1>
+                <h1 class="page-title">
+                    <i class="fas fa-sign-out-alt page-icon-main"></i> 
+                    تسجيل خروج الباص
+                </h1>
             </div>
 
             <div class="selection-grid">
                 <div class="section customer-selection-section">
                     <label for="customer-select-enhanced" class="section-label">
-                        <i class="fas fa-user-tie"></i> اختر العميل (السيارة)
+                        <i class="fas fa-id-card section-icon"></i>
+                        اختر العميل (السيارة)
                     </label>
                     <div id="customer-select-wrapper"></div>
                     <div id="selected-customer-info" class="selected-info-badge"></div>
@@ -20,22 +37,27 @@ frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
 
                 <div class="section items-selection-section">
                     <label class="section-label">
-                        <i class="fas fa-th-large"></i> اختر الصنف
+                        <i class="fas fa-boxes section-icon"></i> 
+                        اختر الصنف
                     </label>
                     <div id="items-container-enhanced" class="items-grid-container">
-                        <!-- بطاقات الأصناف ستعرض هنا -->
                     </div>
                 </div>
             </div>
 
             <div class="summary-and-action-section">
                 <div class="price-display-container">
-                    <span class="price-label-text">الإجمالي:</span>
+                    <span class="price-label-text">
+                        <i class="fas fa-cash-register price-icon"></i>
+                        الإجمالي:
+                    </span>
                     <span id="price-value-enhanced" class="price-value">0.00</span>
                     <span id="price-currency-enhanced" class="price-currency"></span>
                 </div>
                 <button id="print-exit-enhanced" class="btn btn-primary btn-lg btn-cta" disabled>
-                    <span class="button-icon"><i class="fas fa-receipt"></i></span>
+                    <span class="button-icon">
+                        <i class="fas fa-print button-main-icon"></i>
+                    </span>
                     <span class="button-text">خروج وطباعة الإيصال</span>
                     <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                 </button>
@@ -218,18 +240,14 @@ frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
                         indicator: 'green'
                     }, 7);
 
-                    // --- بداية كود الطباعة المحسن (مع استخدام frappe.db.get_doc) ---
-                    frappe.db.get_doc("Sales Invoice", invoiceName) // *** التعديل هنا ***
-                        .then(doc => { // *** .then() هو جزء من Promise API ***
-                            console.log("Document to be printed (Sales Invoice) fetched with frappe.db.get_doc:", JSON.parse(JSON.stringify(doc)));
-
+                    frappe.db.get_doc("Sales Invoice", invoiceName)
+                        .then(doc => {
+                            // console.log("Document to be printed (Sales Invoice) fetched with frappe.db.get_doc:", JSON.parse(JSON.stringify(doc))); // يمكن التعليق عليه
                             if (!doc || !doc.name || !doc.items || !doc.customer) {
                                 console.error("Invoice document is missing critical data for printing:", doc);
                                 frappe.show_alert({message: "بيانات الفاتورة غير مكتملة للطباعة.", indicator: "red"});
-                                // لا تنسَ إعادة تمكين الزر إذا توقفت هنا (سيتم التعامل معه في always)
                                 return;
                             }
-
                             frappe.call({
                                 method: "frappe.www.printview.get_html_and_style",
                                 args: {
@@ -238,31 +256,27 @@ frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
                                     no_letterhead: 0
                                 },
                                 callback: function(print_res) {
-                                    console.log("Print service response (get_html_and_style):", print_res);
-
+                                    // console.log("Print service response (get_html_and_style):", print_res); // يمكن التعليق عليه
                                     if (print_res.message && print_res.message.html && print_res.message.html.trim() !== "") {
                                         const printWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
                                         if (printWindow) {
-                                            console.log("Print window opened successfully.");
+                                            // console.log("Print window opened successfully."); // يمكن التعليق عليه
                                             printWindow.document.open();
                                             printWindow.document.write('<html><head><title>إيصال الخروج</title></head><body>');
                                             printWindow.document.write(print_res.message.html);
                                             printWindow.document.write('</body></html>');
                                             printWindow.document.close();
-
                                             setTimeout(function() {
                                                 try {
-                                                    console.log("Attempting to print from print window...");
+                                                    // console.log("Attempting to print from print window..."); // يمكن التعليق عليه
                                                     printWindow.focus();
                                                     printWindow.print();
-                                                    console.log("Print command issued to browser.");
-                                                    // setTimeout(() => { printWindow.close(); }, 7000); // يمكن تعديل هذا أو حذفه
+                                                    // console.log("Print command issued to browser."); // يمكن التعليق عليه
                                                 } catch (e) {
                                                     console.error("Error during print window operations (e.g., print dialog):", e);
                                                     frappe.show_alert({message: "حدث خطأ أثناء محاولة طباعة الإيصال.", indicator: "red"});
                                                 }
                                             }, 1000);
-
                                         } else {
                                             console.error("Failed to open print window. Pop-up blocker might be active.");
                                             frappe.show_alert({message: "فشل فتح نافذة الطباعة. يرجى التحقق من إعدادات مانع النوافذ المنبثقة.", indicator: "orange"});
@@ -277,12 +291,10 @@ frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
                                      console.error("Print service call (get_html_and_style) error:", print_err);
                                 }
                             });
-                        }).catch(err => { // *** .catch() لمعالجة خطأ frappe.db.get_doc ***
+                        }).catch(err => {
                             frappe.show_alert({ message: `خطأ في جلب مستند الفاتورة ${invoiceName} للطباعة.`, indicator: 'red' }, 7);
                             console.error(`Error fetching Sales Invoice ${invoiceName} for printing using frappe.db.get_doc:`, err);
-                            // لا تنسَ إعادة تمكين الزر إذا توقفت هنا (سيتم التعامل معه في always)
                         });
-                    // --- نهاية كود الطباعة المحسن ---
                     resetPage();
                 } else if (r.exc) {
                     // الخطأ يظهر تلقائياً
