@@ -1,0 +1,425 @@
+/* bus_exit.css */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: #28a745; /* أخضر */
+    --primary-hover-color: #218838;
+    --secondary-color: #007bff; /* أزرق */
+    --light-gray: #f8f9fa;
+    --medium-gray: #e9ecef;
+    --dark-gray: #343a40;
+    --text-color: #333;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --border-radius: 8px;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --input-focus-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25); /* ظل أخضر لتركيز الإدخال */
+}
+
+/* تطبيق الخط الأساسي إذا لم يتم تطبيقه من خلال JS بشكل كافٍ */
+.bus-exit-page-font,
+.bus-exit-page-font input,
+.bus-exit-page-font button,
+.bus-exit-page-font select,
+.bus-exit-page-font textarea,
+.bus-exit-page-font .frappe-control .form-control,
+.bus-exit-page-font .select2-container .select2-selection--single .select2-selection__rendered {
+    font-family: 'Cairo', sans-serif !important;
+}
+
+.bus-exit-page-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 25px;
+    background-color: #fff; /* خلفية بيضاء للحاوية الرئيسية */
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 35px; /* زيادة المسافة السفلية */
+    padding-bottom: 25px; /* زيادة الحشو السفلي */
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.page-title {
+    font-size: 2.4rem; /* تكبير حجم العنوان قليلاً */
+    font-weight: 700;
+    color: var(--dark-gray);
+    display: flex; /* لمحاذاة الأيقونة والنص */
+    align-items: center;
+    justify-content: center;
+}
+
+.page-title .frappe-icon, /* استخدام كلاس عام للأيقونات في الصفحة */
+.page-title .fas { /* دعم FontAwesome مباشرة إذا تم استخدامه */
+    margin-right: 12px; /* زيادة المسافة بجانب الأيقونة */
+    color: var(--primary-color);
+    font-size: 2.2rem; /* حجم أيقونة العنوان */
+}
+
+.selection-grid {
+    display: flex; /* استخدام Flexbox للتحكم في الترتيب العمودي */
+    flex-direction: column; /* جعل العناصر تترتب عمودياً */
+    gap: 30px; /* المسافة بين قسم العميل وقسم الأصناف */
+    margin-bottom: 35px;
+}
+
+.section {
+    background-color: var(--light-gray);
+    padding: 25px; /* زيادة الحشو الداخلي للقسم */
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.section-label {
+    display: flex; /* لمحاذاة الأيقونة والنص */
+    align-items: center;
+    font-size: 1.4rem; /* تكبير حجم عنوان القسم */
+    font-weight: 600;
+    margin-bottom: 20px; /* زيادة المسافة السفلية */
+    color: var(--secondary-color);
+}
+
+.section-label .frappe-icon,
+.section-label .fas {
+    margin-right: 10px; /* زيادة المسافة بجانب الأيقونة */
+    font-size: 1.3rem; /* حجم أيقونة عنوان القسم */
+}
+
+/* تحسين حقل اختيار العميل (Frappe Link Control) */
+#customer-select-wrapper .frappe-control[data-fieldtype="Link"] .form-control,
+#customer-select-wrapper .select2-container .select2-selection--single { /* لـ Select2 إذا تم استخدامه كبديل */
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 12px;
+    border-radius: var(--border-radius);
+    border: 1px solid #ced4da;
+    height: auto; /* ليتكيف مع حشو Frappe */
+    min-height: 45px; /* ارتفاع أدنى ليتناسب مع الأزرار */
+}
+#customer-select-wrapper .frappe-control[data-fieldtype="Link"] .form-control:focus,
+#customer-select-wrapper .select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: var(--primary-color);
+    box-shadow: var(--input-focus-shadow);
+}
+
+/* Select2 styles (إذا كنت تستخدم Select2 كمكتبة منفصلة) */
+.select2-container .select2-selection--single {
+    height: 45px !important;
+    padding-top: 8px; /* ضبط محاذاة النص عمودياً */
+    font-size: 1rem;
+    border-radius: var(--border-radius) !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 43px !important;
+}
+
+
+.selected-info-badge {
+    margin-top: 15px; /* زيادة المسافة العلوية */
+    padding: 10px 15px; /* زيادة الحشو */
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: var(--border-radius);
+    font-size: 0.95rem; /* تكبير الخط قليلاً */
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-weight: 600;
+}
+.selected-info-badge.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+
+/* تصميم بطاقات الأصناف */
+.items-grid-container {
+    display: grid;
+    /* تعديل لعرض 5 أعمدة بشكل افتراضي، مع الحفاظ على التجاوب للشاشات الأصغر */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* للشاشات الصغيرة جداً */
+    /* media query لتطبيق 5 أعمدة على الشاشات الأكبر */
+    /* يمكنك تعديل 768px أو 992px حسب ما تراه مناسباً كنقطة انتقال */
+    @media (min-width: 992px) { /* أو 768px أو 1200px */
+        grid-template-columns: repeat(5, 1fr); /* 5 أعمدة متساوية العرض */
+    }
+    gap: 15px; /* يمكن تقليل المسافة قليلاً إذا لزم الأمر لاستيعاب 5 بطاقات */
+    max-height: 450px;
+    overflow-y: auto;
+    padding: 15px;
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    background-color: #fff;
+    flex-grow: 1;
+}
+
+.item-card-enhanced {
+    background-color: #fff;
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease, border-color 0.25s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* لتوزيع المحتوى داخل البطاقة */
+}
+
+.item-card-enhanced:hover {
+    transform: translateY(-6px) scale(1.03); /* تأثير رفع وتكبير طفيف */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+    border-color: var(--primary-color); /* تغيير لون الحدود عند التحويم */
+}
+
+.item-card-enhanced.selected {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-color), 0 6px 15px rgba(var(--primary-color), 0.3); /* ظل مزدوج للتحديد */
+    background-color: #e6f7e9; /* لون أخضر فاتح للخلفية عند الاختيار */
+    transform: translateY(-3px) scale(1.01); /* تأثير بسيط عند الاختيار */
+}
+
+.item-card-enhanced img {
+    width: 100%;
+    height: 100px; /* أو اجعله متغيراً حسب الحاجة */
+    object-fit: contain; /* "contain" أفضل للوجوهات والشعارات, "cover" للصور الفوتوغرافية */
+    margin-bottom: 12px; /* زيادة المسافة */
+    border-radius: calc(var(--border-radius) / 1.5); /* تدوير زوايا الصورة */
+    transition: transform 0.3s ease;
+}
+.item-card-enhanced:hover img {
+    transform: scale(1.05); /* تكبير طفيف للصورة عند تحويم البطاقة */
+}
+
+
+.item-card-enhanced .item-name {
+    font-size: 1.05rem; /* تكبير خط اسم الصنف */
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin-bottom: 8px; /* زيادة المسافة */
+    line-height: 1.3; /* تحسين قابلية القراءة */
+    min-height: calc(1.05rem * 1.3 * 2); /* ضمان مساحة لسطرين على الأقل */
+    word-break: break-word; /* لمنع تجاوز النص */
+}
+.item-card-enhanced .item-code-display {
+    font-size: 0.85rem; /* تكبير خط كود الصنف قليلاً */
+    color: #6c757d; /* لون رمادي داكن أكثر */
+}
+
+/* رسائل داخل حاوية الأصناف (مثل "لم يتم العثور على أصناف") */
+.items-grid-container .text-muted,
+.items-grid-container .text-danger {
+    grid-column: 1 / -1; /* لتتمدد الرسالة على كامل عرض الشبكة */
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+}
+
+/* قسم الملخص والإجراء */
+.summary-and-action-section {
+    margin-top: 35px; /* زيادة المسافة العلوية */
+    padding: 30px; /* زيادة الحشو */
+    background-color: var(--light-gray);
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px; /* زيادة المسافة بين العناصر */
+    box-shadow: var(--card-shadow);
+}
+
+@media (min-width: 768px) {
+    .summary-and-action-section {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.price-display-container {
+    font-size: 2rem; /* تكبير حجم السعر */
+    font-weight: 700;
+    color: var(--dark-gray);
+    display: flex;
+    align-items: baseline; /* محاذاة أفضل للعملة والسعر */
+}
+
+.price-label-text {
+    color: var(--secondary-color);
+    margin-right: 10px; /* زيادة المسافة */
+    font-size: 1.5rem; /* تكبير خط "الإجمالي" */
+    font-weight: 600;
+}
+
+.price-value {
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+.price-currency {
+    font-size: 1.3rem; /* تكبير خط العملة */
+    margin-left: 8px; /* زيادة المسافة */
+    color: #555;
+    font-weight: 600;
+}
+
+/* زر الإجراء الرئيسي */
+#print-exit-enhanced.btn-cta {
+    background: linear-gradient(45deg, var(--primary-color), #228B22); /* تدرج لوني للزر */
+    border: none;
+    color: white;
+    font-size: 1.25rem; /* تكبير خط الزر */
+    font-weight: 600;
+    padding: 14px 30px; /* زيادة حشو الزر */
+    border-radius: var(--border-radius);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+    min-width: 300px; /* زيادة العرض الأدنى للزر */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: inline-flex; /* لمحاذاة الأيقونة والنص والمؤشر */
+    align-items: center;
+    justify-content: center;
+}
+
+#print-exit-enhanced.btn-cta:hover:not(:disabled) {
+    background: linear-gradient(45deg, var(--primary-hover-color), #1E751E);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+#print-exit-enhanced.btn-cta:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 3px 7px rgba(0,0,0,0.15);
+}
+
+#print-exit-enhanced.btn-cta:disabled {
+    background: #b0bec5; /* لون رمادي معتم أكثر للزر المعطل */
+    border-color: #b0bec5;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+#print-exit-enhanced.btn-cta .button-icon .fas, /* أيقونة الزر */
+#print-exit-enhanced.btn-cta .button-icon .frappe-icon {
+    margin-right: 10px;
+    font-size: 1.2rem; /* حجم أيقونة الزر */
+}
+#print-exit-enhanced.btn-cta .spinner-border {
+    margin-left: 10px; /* زيادة المسافة لمؤشر التحميل */
+    width: 1.2rem; /* حجم مؤشر التحميل */
+    height: 1.2rem;
+}
+/* إخفاء نص الزر عند ظهور المؤشر (اختياري) */
+#print-exit-enhanced.btn-cta.processing .button-text {
+    /* display: none; */ /* يمكنك إلغاء التعليق إذا أردت إخفاء النص */
+}
+#print-exit-enhanced.btn-cta.processing .button-icon {
+    /* margin-right: 0; */ /* إذا تم إخفاء النص */
+}
+
+
+/* مؤشر تحميل عام */
+.global-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.85); /* خلفية أكثر شفافية قليلاً */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* أعلى من أي شيء آخر */
+    backdrop-filter: blur(3px); /* تأثير ضبابي للخلفية (مدعوم في المتصفحات الحديثة) */
+}
+.global-loader .spinner-grow {
+    width: 3.5rem; /* تكبير المؤشر قليلاً */
+    height: 3.5rem;
+    color: var(--primary-color);
+}
+
+/* تصميم شريط التمرير (اختياري، يعمل على متصفحات WebKit مثل Chrome و Safari و Edge) */
+.items-grid-container::-webkit-scrollbar {
+  width: 10px; /* زيادة عرض شريط التمرير */
+}
+.items-grid-container::-webkit-scrollbar-track {
+  background: var(--light-gray);
+  border-radius: var(--border-radius);
+}
+.items-grid-container::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: var(--border-radius);
+  border: 2px solid var(--light-gray); /* إضافة حدود داخلية للمقبض */
+}
+.items-grid-container::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover-color);
+}
+
+/* تحسينات إضافية للواجهة المتجاوبة */
+@media (max-width: 576px) {
+    .page-title {
+        font-size: 1.8rem;
+    }
+    .page-title .fas, .page-title .frappe-icon {
+        font-size: 1.6rem;
+    }
+    .section-label {
+        font-size: 1.2rem;
+    }
+    .section-label .fas, .section-label .frappe-icon {
+        font-size: 1.1rem;
+    }
+    .item-card-enhanced .item-name {
+        font-size: 0.95rem;
+    }
+    .price-display-container {
+        font-size: 1.5rem;
+    }
+    .price-label-text {
+        font-size: 1.2rem;
+    }
+    .price-currency {
+        font-size: 1rem;
+    }
+    #print-exit-enhanced.btn-cta {
+        font-size: 1.1rem;
+        padding: 12px 20px;
+        min-width: auto; /* السماح للزر بأن يكون أصغر */
+        width: 100%; /* جعل الزر يمتد على كامل العرض */
+    }
+    .summary-and-action-section {
+        padding: 20px;
+    }
+    .selection-grid, .summary-and-action-section {
+        gap: 20px; /* تقليل المسافات */
+    }
+}
+
+
+/* تنسيقات إضافية للأيقونات الجديدة */
+.page-icon-main {
+    margin-right: 15px; /* أو margin-left إذا كنت تريدها على اليمين في RTL */
+    font-size: 2.3rem; /* تعديل الحجم ليتناسب مع العنوان الرئيسي */
+    color: var(--primary-color); /* لون الأيقونة الرئيسية */
+}
+
+.section-icon {
+    margin-right: 10px; /* أو margin-left */
+    font-size: 1.2em; /* حجم نسبي لعنوان القسم */
+    color: inherit; /* لترث لون الـ label */
+    opacity: 0.8;
+}
+
+.price-icon {
+    margin-right: 8px; /* أو margin-left */
+    font-size: 0.9em; /* حجم نسبي للنص المحيط */
+    color: var(--secondary-color); /* لون مميز لأيقونة السعر */
+}
+
+.button-main-icon {
+    font-size: 1.1em; /* حجم نسبي لنص الزر */
+    /* margin-right: 8px;  موجودة بالفعل في كلاس .button-icon */
+}
