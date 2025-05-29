@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:BGC-{#####}",
  "creation": "2025-04-26 17:39:53.352630",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -124,10 +125,11 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-29 14:24:01.867798",
+ "modified": "2025-05-29 15:06:00.984003",
  "modified_by": "Administrator",
  "module": "Gate Tool",
  "name": "Bus Gate control",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
