@@ -5,6 +5,7 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "allow_in_quick_entry": 0,
    "allow_on_submit": 0,
    "bold": 0,
@@ -710,12 +711,19 @@
    "_liked_by": null,
    "_user_tags": null,
    "allow_in_quick_entry": 0,
+=======
+   "allow_in_quick_entry": 1,
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "allow_on_submit": 0,
    "bold": 0,
    "collapsible": 0,
    "collapsible_depends_on": null,
    "columns": 0,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:26:31.450243",
+=======
+   "creation": "2023-04-16 13:47:09.999375",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default": null,
    "depends_on": null,
    "description": null,
@@ -723,6 +731,7 @@
    "dt": "Customer",
    "fetch_from": null,
    "fetch_if_empty": 0,
+<<<<<<< HEAD
    "fieldname": "custom_\u0631\u0642\u0645_\u0627\u0644\u0633\u064a\u0627\u0631\u0647",
    "fieldtype": "Data",
    "hidden": 1,
@@ -730,12 +739,22 @@
    "hide_days": 0,
    "hide_seconds": 0,
    "idx": 44,
+=======
+   "fieldname": "business_owner",
+   "fieldtype": "Data",
+   "hidden": 0,
+   "hide_border": 0,
+   "hide_days": 0,
+   "hide_seconds": 0,
+   "idx": 13,
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
    "in_list_view": 0,
    "in_preview": 0,
    "in_standard_filter": 0,
+<<<<<<< HEAD
    "insert_after": "custom_\u0646\u0648\u0639_\u0627\u0644\u0633\u064a\u0627\u0631\u0647",
    "is_system_generated": 0,
    "is_virtual": 0,
@@ -747,6 +766,19 @@
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-custom_\u0631\u0642\u0645_\u0627\u0644\u0633\u064a\u0627\u0631\u0647",
+=======
+   "insert_after": "date_of_birth",
+   "is_system_generated": 0,
+   "is_virtual": 0,
+   "label": "Business Owner",
+   "length": 0,
+   "link_filters": null,
+   "mandatory_depends_on": null,
+   "modified": "2023-04-16 13:47:09.999375",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-business_owner",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "no_copy": 0,
    "non_negative": 0,
    "options": null,
@@ -779,6 +811,7 @@
    "collapsible": 0,
    "collapsible_depends_on": null,
    "columns": 0,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:26:32.720164",
    "default": null,
    "depends_on": null,
@@ -844,6 +877,9 @@
    "collapsible_depends_on": null,
    "columns": 0,
    "creation": "2025-05-30 19:26:34.145429",
+=======
+   "creation": "2025-06-29 18:13:00.705939",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default": null,
    "depends_on": null,
    "description": null,
@@ -851,6 +887,7 @@
    "dt": "Customer",
    "fetch_from": null,
    "fetch_if_empty": 0,
+<<<<<<< HEAD
    "fieldname": "custom_\u0639\u062f\u062f_\u0627\u0644\u0631\u0643\u0627\u0628",
    "fieldtype": "Float",
    "hidden": 0,
@@ -917,17 +954,26 @@
    "fetch_if_empty": 0,
    "fieldname": "custom_\u0644\u0648\u0646_\u0627\u0644\u0633\u064a\u0627\u0631\u0647",
    "fieldtype": "Data",
+=======
+   "fieldname": "custom_item_group",
+   "fieldtype": "Link",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "hidden": 0,
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+<<<<<<< HEAD
    "idx": 45,
+=======
+   "idx": 1,
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
    "in_list_view": 0,
    "in_preview": 0,
    "in_standard_filter": 0,
+<<<<<<< HEAD
    "insert_after": "custom_\u0631\u0642\u0645_\u0627\u0644\u0633\u064a\u0627\u0631\u0647",
    "is_system_generated": 0,
    "is_virtual": 0,
@@ -942,6 +988,22 @@
    "no_copy": 0,
    "non_negative": 0,
    "options": null,
+=======
+   "insert_after": "basic_info",
+   "is_system_generated": 0,
+   "is_virtual": 0,
+   "label": "Item Group",
+   "length": 0,
+   "link_filters": null,
+   "mandatory_depends_on": null,
+   "modified": "2025-06-29 18:13:00.705939",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-custom_item_group",
+   "no_copy": 0,
+   "non_negative": 0,
+   "options": "Item Group",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "owner": "Administrator",
    "permlevel": 0,
    "placeholder": null,
@@ -956,7 +1018,11 @@
    "search_index": 0,
    "show_dashboard": 0,
    "sort_options": 0,
+<<<<<<< HEAD
    "translatable": 1,
+=======
+   "translatable": 0,
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "unique": 0,
    "width": null
   },
@@ -965,13 +1031,21 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "allow_in_quick_entry": 0,
+=======
+   "allow_in_quick_entry": 1,
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "allow_on_submit": 0,
    "bold": 0,
    "collapsible": 0,
    "collapsible_depends_on": null,
    "columns": 0,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:26:32.143949",
+=======
+   "creation": "2023-04-16 13:47:09.694417",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default": null,
    "depends_on": null,
    "description": null,
@@ -979,12 +1053,17 @@
    "dt": "Customer",
    "fetch_from": null,
    "fetch_if_empty": 0,
+<<<<<<< HEAD
    "fieldname": "custom_\u0645\u0648\u062f\u064a\u0644_\u0627\u0644\u0633\u064a\u0627\u0631\u0647",
+=======
+   "fieldname": "customer_id",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "fieldtype": "Data",
    "hidden": 0,
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+<<<<<<< HEAD
    "idx": 46,
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
@@ -1003,6 +1082,26 @@
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-custom_\u0645\u0648\u062f\u064a\u0644_\u0627\u0644\u0633\u064a\u0627\u0631\u0647",
+=======
+   "idx": 11,
+   "ignore_user_permissions": 0,
+   "ignore_xss_filter": 0,
+   "in_global_search": 0,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 0,
+   "insert_after": "territory",
+   "is_system_generated": 0,
+   "is_virtual": 0,
+   "label": "\u0631\u0642\u0645 \u0627\u0644\u0623\u0642\u0627\u0645\u0629/\u0627\u0644\u0647\u0648\u064a\u0629",
+   "length": 0,
+   "link_filters": null,
+   "mandatory_depends_on": null,
+   "modified": "2023-04-16 13:47:09.694417",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-customer_id",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "no_copy": 0,
    "non_negative": 0,
    "options": null,
@@ -1021,7 +1120,11 @@
    "show_dashboard": 0,
    "sort_options": 0,
    "translatable": 1,
+<<<<<<< HEAD
    "unique": 0,
+=======
+   "unique": 1,
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "width": null
   },
   {
@@ -1035,7 +1138,11 @@
    "collapsible": 0,
    "collapsible_depends_on": null,
    "columns": 0,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:26:33.089784",
+=======
+   "creation": "2023-04-08 18:18:58.146853",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default": null,
    "depends_on": null,
    "description": null,
@@ -1043,19 +1150,28 @@
    "dt": "Customer",
    "fetch_from": null,
    "fetch_if_empty": 0,
+<<<<<<< HEAD
    "fieldname": "custom_\u0646\u0648\u0639_\u0627\u0644\u0631\u062e\u0635\u0647",
+=======
+   "fieldname": "customer_name_in_arabic",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "fieldtype": "Data",
    "hidden": 0,
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+<<<<<<< HEAD
    "idx": 40,
+=======
+   "idx": 5,
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
    "in_list_view": 0,
    "in_preview": 0,
    "in_standard_filter": 0,
+<<<<<<< HEAD
    "insert_after": "custom_\u0639\u062f\u062f_\u0627\u0644\u0631\u0643\u0627\u0628",
    "is_system_generated": 0,
    "is_virtual": 0,
@@ -1067,6 +1183,19 @@
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-custom_\u0646\u0648\u0639_\u0627\u0644\u0631\u062e\u0635\u0647",
+=======
+   "insert_after": "customer_name",
+   "is_system_generated": 1,
+   "is_virtual": 0,
+   "label": "Customer Name in Arabic",
+   "length": 0,
+   "link_filters": null,
+   "mandatory_depends_on": null,
+   "modified": "2023-08-19 09:58:36.248715",
+   "modified_by": "admin@c4system.com",
+   "module": null,
+   "name": "Customer-customer_name_in_arabic",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "no_copy": 0,
    "non_negative": 0,
    "options": null,
@@ -1093,13 +1222,21 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "allow_in_quick_entry": 0,
+=======
+   "allow_in_quick_entry": 1,
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "allow_on_submit": 0,
    "bold": 0,
    "collapsible": 0,
    "collapsible_depends_on": null,
    "columns": 0,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:26:31.012918",
+=======
+   "creation": "2023-04-16 13:53:18.567058",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default": null,
    "depends_on": null,
    "description": null,
@@ -1107,19 +1244,29 @@
    "dt": "Customer",
    "fetch_from": null,
    "fetch_if_empty": 0,
+<<<<<<< HEAD
    "fieldname": "custom_\u0646\u0648\u0639_\u0627\u0644\u0633\u064a\u0627\u0631\u0647",
    "fieldtype": "Data",
+=======
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "hidden": 0,
    "hide_border": 0,
    "hide_days": 0,
    "hide_seconds": 0,
+<<<<<<< HEAD
    "idx": 43,
+=======
+   "idx": 12,
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
    "in_list_view": 0,
    "in_preview": 0,
    "in_standard_filter": 0,
+<<<<<<< HEAD
    "insert_after": "column_break0",
    "is_system_generated": 0,
    "is_virtual": 0,
@@ -1131,6 +1278,19 @@
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-custom_\u0646\u0648\u0639_\u0627\u0644\u0633\u064a\u0627\u0631\u0647",
+=======
+   "insert_after": "customer_id",
+   "is_system_generated": 0,
+   "is_virtual": 0,
+   "label": "Date of Birth",
+   "length": 0,
+   "link_filters": null,
+   "mandatory_depends_on": null,
+   "modified": "2023-04-16 13:53:18.567058",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-date_of_birth",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "no_copy": 0,
    "non_negative": 0,
    "options": null,
@@ -1148,7 +1308,11 @@
    "search_index": 0,
    "show_dashboard": 0,
    "sort_options": 0,
+<<<<<<< HEAD
    "translatable": 1,
+=======
+   "translatable": 0,
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "unique": 0,
    "width": null
   }
@@ -1166,9 +1330,15 @@
    "is_child_table": 0,
    "link_doctype": "Party Specific Item",
    "link_fieldname": "party",
+<<<<<<< HEAD
    "modified": "2025-04-26 12:58:25.629866",
    "modified_by": "Administrator",
    "name": "ro010744kf",
+=======
+   "modified": "2025-03-05 03:35:34.791669",
+   "modified_by": "Administrator",
+   "name": "kovvl3ccde",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "owner": "Administrator",
    "parent": "Customer",
    "parent_doctype": null,
@@ -1183,11 +1353,16 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:56:56.128937",
+=======
+   "creation": "2023-04-16 13:49:50.479223",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
    "doctype_or_field": "DocField",
+<<<<<<< HEAD
    "field_name": "accounting_tab",
    "idx": 0,
    "is_system_generated": 0,
@@ -1195,6 +1370,15 @@
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-accounting_tab-hidden",
+=======
+   "field_name": "account_manager",
+   "idx": 0,
+   "is_system_generated": 0,
+   "modified": "2023-04-16 13:49:50.479223",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-account_manager-hidden",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "owner": "Administrator",
    "property": "hidden",
    "property_type": "Check",
@@ -1206,11 +1390,16 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:56:55.710327",
+=======
+   "creation": "2023-04-16 13:43:58.634815",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
    "doctype_or_field": "DocField",
+<<<<<<< HEAD
    "field_name": "contact_and_address_tab",
    "idx": 0,
    "is_system_generated": 0,
@@ -1218,6 +1407,15 @@
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-contact_and_address_tab-hidden",
+=======
+   "field_name": "accounting_tab",
+   "idx": 0,
+   "is_system_generated": 0,
+   "modified": "2023-04-16 13:43:58.634815",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-accounting_tab-hidden",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "owner": "Administrator",
    "property": "hidden",
    "property_type": "Check",
@@ -1229,7 +1427,11 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:53:37.035442",
+=======
+   "creation": "2023-04-16 13:44:49.189274",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
@@ -1237,6 +1439,7 @@
    "field_name": "customer_group",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
    "modified": "2025-05-30 19:53:37.035442",
    "modified_by": "Administrator",
    "module": null,
@@ -1246,17 +1449,33 @@
    "property_type": "Data",
    "row_name": null,
    "value": "\u0646\u0648\u0639 \u0648\u0633\u064a\u0644\u0647 \u0627\u0644\u0646\u0642\u0644"
+=======
+   "modified": "2023-04-16 13:44:49.189274",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-customer_group-default",
+   "owner": "Administrator",
+   "property": "default",
+   "property_type": "Text",
+   "row_name": null,
+   "value": "\u062a\u062c\u0627\u0631\u064a"
+>>>>>>> [Add] Fields customer_bus , customer_microbus
   },
   {
    "_assign": null,
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:54:56.273358",
+=======
+   "creation": "2023-04-16 13:45:07.047136",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
    "doctype_or_field": "DocField",
+<<<<<<< HEAD
    "field_name": "customer_name",
    "idx": 0,
    "is_system_generated": 0,
@@ -1269,17 +1488,36 @@
    "property_type": "Data",
    "row_name": null,
    "value": "\u0631\u0642\u0645 \u0627\u0644\u0633\u064a\u0627\u0631\u0647"
+=======
+   "field_name": "customer_group",
+   "idx": 0,
+   "is_system_generated": 0,
+   "modified": "2023-04-16 13:45:07.047136",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-customer_group-in_list_view",
+   "owner": "Administrator",
+   "property": "in_list_view",
+   "property_type": "Check",
+   "row_name": null,
+   "value": "0"
+>>>>>>> [Add] Fields customer_bus , customer_microbus
   },
   {
    "_assign": null,
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:13:19.549394",
+=======
+   "creation": "2023-04-16 13:45:07.209278",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
    "doctype_or_field": "DocField",
+<<<<<<< HEAD
    "field_name": "customer_type",
    "idx": 0,
    "is_system_generated": 0,
@@ -1292,13 +1530,31 @@
    "property_type": "Check",
    "row_name": null,
    "value": "1"
+=======
+   "field_name": "customer_group",
+   "idx": 0,
+   "is_system_generated": 0,
+   "modified": "2023-04-16 13:45:07.209278",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-customer_group-in_standard_filter",
+   "owner": "Administrator",
+   "property": "in_standard_filter",
+   "property_type": "Check",
+   "row_name": null,
+   "value": "0"
+>>>>>>> [Add] Fields customer_bus , customer_microbus
   },
   {
    "_assign": null,
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 20:08:32.273536",
+=======
+   "creation": "2023-04-16 13:50:44.300619",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
@@ -1306,7 +1562,11 @@
    "field_name": "defaults_tab",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
    "modified": "2025-05-30 20:08:32.273536",
+=======
+   "modified": "2023-04-16 13:50:44.300619",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-defaults_tab-hidden",
@@ -1321,7 +1581,11 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 20:08:32.560389",
+=======
+   "creation": "2023-04-16 13:51:41.073766",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
@@ -1329,7 +1593,11 @@
    "field_name": "internal_customer_section",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
    "modified": "2025-05-30 20:08:32.560389",
+=======
+   "modified": "2023-04-16 13:51:41.073766",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-internal_customer_section-hidden",
@@ -1344,7 +1612,34 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:41:17.514169",
+=======
+   "creation": "2023-04-16 13:49:50.100665",
+   "default_value": null,
+   "doc_type": "Customer",
+   "docstatus": 0,
+   "doctype_or_field": "DocField",
+   "field_name": "lead_name",
+   "idx": 0,
+   "is_system_generated": 0,
+   "modified": "2023-04-16 13:49:50.100665",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-lead_name-hidden",
+   "owner": "Administrator",
+   "property": "hidden",
+   "property_type": "Check",
+   "row_name": null,
+   "value": "1"
+  },
+  {
+   "_assign": null,
+   "_comments": null,
+   "_liked_by": null,
+   "_user_tags": null,
+   "creation": "2025-06-29 18:13:00.538036",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
@@ -1352,7 +1647,11 @@
    "field_name": null,
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
    "modified": "2025-05-30 19:41:17.514169",
+=======
+   "modified": "2025-06-29 18:13:00.538036",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-main-field_order",
@@ -1360,14 +1659,22 @@
    "property": "field_order",
    "property_type": "Data",
    "row_name": null,
+<<<<<<< HEAD
    "value": "[\"naming_series\", \"customer_name\", \"salutation\", \"custom_column_break_sbd40\", \"image\", \"customer_type\", \"custom_car_owner\", \"custom_section_break_uk240\", \"opportunity_name\", \"territory\", \"gender\", \"custom_column_break_tt39j\", \"lead_name\", \"prospect_name\", \"custom_column_break_irmbl\", \"account_manager\", \"defaults_tab\", \"default_currency\", \"default_bank_account\", \"column_break_14\", \"default_price_list\", \"internal_customer_section\", \"is_internal_customer\", \"represents_company\", \"column_break_70\", \"companies\", \"more_info\", \"market_segment\", \"industry\", \"customer_pos_id\", \"website\", \"language\", \"column_break_45\", \"customer_details\", \"custom_tab_9\", \"basic_info\", \"customer_group\", \"custom_\\u0631\\u0642\\u0645_\\u0627\\u0644\\u0634\\u0627\\u0633\\u064a\\u0647\", \"custom_\\u0639\\u062f\\u062f_\\u0627\\u0644\\u0631\\u0643\\u0627\\u0628\", \"custom_\\u0646\\u0648\\u0639_\\u0627\\u0644\\u0631\\u062e\\u0635\\u0647\", \"custom_\\u062a\\u0627\\u0631\\u064a\\u062e_\\u0627\\u0635\\u062f\\u0627\\u0631_\\u0627\\u0644\\u0631\\u062e\\u0635\\u0629\", \"column_break0\", \"custom_\\u0646\\u0648\\u0639_\\u0627\\u0644\\u0633\\u064a\\u0627\\u0631\\u0647\", \"custom_\\u0631\\u0642\\u0645_\\u0627\\u0644\\u0633\\u064a\\u0627\\u0631\\u0647\", \"custom_\\u0644\\u0648\\u0646_\\u0627\\u0644\\u0633\\u064a\\u0627\\u0631\\u0647\", \"custom_\\u0645\\u0648\\u062f\\u064a\\u0644_\\u0627\\u0644\\u0633\\u064a\\u0627\\u0631\\u0647\", \"custom_\\u062a\\u0627\\u0631\\u064a\\u062e_\\u0627\\u0646\\u062a\\u0647\\u0627\\u0621_\\u0627\\u0644\\u0631\\u062e\\u0635\\u0629\", \"custom_\\u062e\\u0637_\\u0627\\u0644\\u0633\\u064a\\u0631\", \"custom_\\u0627\\u0644\\u0633\\u0627\\u0626\\u0642\\u064a\\u0646\", \"custom_driver\", \"dashboard_tab\", \"contact_and_address_tab\", \"address_contacts\", \"address_html\", \"column_break1\", \"contact_html\", \"primary_address_and_contact_detail\", \"column_break_26\", \"customer_primary_address\", \"primary_address\", \"column_break_nwor\", \"customer_primary_contact\", \"mobile_no\", \"email_id\", \"tax_tab\", \"taxation_section\", \"tax_id\", \"column_break_21\", \"tax_category\", \"tax_withholding_category\", \"accounting_tab\", \"credit_limit_section\", \"payment_terms\", \"credit_limits\", \"default_receivable_accounts\", \"accounts\", \"loyalty_points_tab\", \"loyalty_program\", \"column_break_54\", \"loyalty_program_tier\", \"sales_team_tab\", \"sales_team\", \"sales_team_section\", \"default_sales_partner\", \"column_break_66\", \"default_commission_rate\", \"settings_tab\", \"so_required\", \"dn_required\", \"column_break_53\", \"is_frozen\", \"disabled\", \"portal_users_tab\", \"portal_users\"]"
+=======
+   "value": "[\"basic_info\", \"item_group\", \"naming_series\", \"salutation\", \"customer_name\", \"customer_name_in_arabic\", \"customer_type\", \"customer_group\", \"column_break0\", \"territory\", \"customer_id\", \"date_of_birth\", \"business_owner\", \"gender\", \"lead_name\", \"opportunity_name\", \"prospect_name\", \"account_manager\", \"image\", \"defaults_tab\", \"default_currency\", \"default_bank_account\", \"column_break_14\", \"default_price_list\", \"internal_customer_section\", \"is_internal_customer\", \"represents_company\", \"column_break_70\", \"companies\", \"more_info\", \"market_segment\", \"industry\", \"customer_pos_id\", \"website\", \"language\", \"column_break_45\", \"customer_details\", \"dashboard_tab\", \"contact_and_address_tab\", \"address_contacts\", \"address_html\", \"column_break1\", \"contact_html\", \"primary_address_and_contact_detail\", \"column_break_26\", \"customer_primary_address\", \"primary_address\", \"column_break_nwor\", \"customer_primary_contact\", \"mobile_no\", \"email_id\", \"tax_tab\", \"taxation_section\", \"tax_id\", \"column_break_21\", \"tax_category\", \"tax_withholding_category\", \"accounting_tab\", \"credit_limit_section\", \"payment_terms\", \"credit_limits\", \"default_receivable_accounts\", \"accounts\", \"loyalty_points_tab\", \"loyalty_program\", \"column_break_54\", \"loyalty_program_tier\", \"sales_team_tab\", \"sales_team\", \"sales_team_section\", \"default_sales_partner\", \"column_break_66\", \"default_commission_rate\", \"settings_tab\", \"so_required\", \"dn_required\", \"column_break_53\", \"is_frozen\", \"disabled\", \"portal_users_tab\", \"portal_users\"]"
+>>>>>>> [Add] Fields customer_bus , customer_microbus
   },
   {
    "_assign": null,
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 20:08:32.732555",
+=======
+   "creation": "2023-04-16 13:50:44.450303",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
@@ -1375,7 +1682,11 @@
    "field_name": "more_info",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
    "modified": "2025-05-30 20:08:32.732555",
+=======
+   "modified": "2023-04-16 13:50:44.450303",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-more_info-hidden",
@@ -1390,7 +1701,11 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-04-26 11:37:51.910382",
+=======
+   "creation": "2023-04-08 18:19:07.805295",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
@@ -1398,7 +1713,11 @@
    "field_name": "naming_series",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
    "modified": "2025-04-26 11:37:51.910382",
+=======
+   "modified": "2023-04-08 18:19:07.805295",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-naming_series-hidden",
@@ -1413,7 +1732,10 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-04-26 11:37:51.501055",
+=======
+   "creation": "2023-10-15 12:29:43.111200",
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
@@ -1421,7 +1743,35 @@
    "field_name": "naming_series",
    "idx": 0,
    "is_system_generated": 0,
+   "modified": "2023-10-15 12:29:43.111200",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-naming_series-options",
+   "owner": null,
+   "property": "options",
+   "property_type": "Text",
+   "row_name": null,
+   "value": "CUST-.YYYY.-"
+  },
+  {
+   "_assign": null,
+   "_comments": null,
+   "_liked_by": null,
+   "_user_tags": null,
+   "creation": "2023-04-08 18:19:07.447881",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
+   "default_value": null,
+   "doc_type": "Customer",
+   "docstatus": 0,
+   "doctype_or_field": "DocField",
+   "field_name": "naming_series",
+   "idx": 0,
+   "is_system_generated": 0,
+<<<<<<< HEAD
    "modified": "2025-04-26 11:37:51.501055",
+=======
+   "modified": "2023-04-08 18:19:07.447881",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-naming_series-reqd",
@@ -1436,11 +1786,16 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:56:56.634390",
+=======
+   "creation": "2023-04-16 13:49:50.322521",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
    "doctype_or_field": "DocField",
+<<<<<<< HEAD
    "field_name": "portal_users_tab",
    "idx": 0,
    "is_system_generated": 0,
@@ -1448,6 +1803,15 @@
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-portal_users_tab-hidden",
+=======
+   "field_name": "opportunity_name",
+   "idx": 0,
+   "is_system_generated": 0,
+   "modified": "2023-04-16 13:49:50.322521",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-opportunity_name-hidden",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "owner": "Administrator",
    "property": "hidden",
    "property_type": "Check",
@@ -1459,7 +1823,11 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:56:56.283067",
+=======
+   "creation": "2023-04-16 13:52:09.172882",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
@@ -1467,7 +1835,11 @@
    "field_name": "sales_team_tab",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
    "modified": "2025-05-30 19:56:56.283067",
+=======
+   "modified": "2023-04-16 13:52:09.172882",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-sales_team_tab-hidden",
@@ -1482,7 +1854,11 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:56:56.455430",
+=======
+   "creation": "2023-04-16 13:52:09.320299",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
@@ -1490,7 +1866,11 @@
    "field_name": "settings_tab",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
    "modified": "2025-05-30 19:56:56.455430",
+=======
+   "modified": "2023-04-16 13:52:09.320299",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-settings_tab-hidden",
@@ -1505,7 +1885,11 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
    "creation": "2025-05-30 19:56:55.923096",
+=======
+   "creation": "2023-04-16 13:43:58.181300",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "default_value": null,
    "doc_type": "Customer",
    "docstatus": 0,
@@ -1513,7 +1897,11 @@
    "field_name": "tax_tab",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
    "modified": "2025-05-30 19:56:55.923096",
+=======
+   "modified": "2023-04-16 13:43:58.181300",
+>>>>>>> [Add] Fields customer_bus , customer_microbus
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer-tax_tab-hidden",
@@ -1522,6 +1910,101 @@
    "property_type": "Check",
    "row_name": null,
    "value": "1"
+<<<<<<< HEAD
+=======
+  },
+  {
+   "_assign": null,
+   "_comments": null,
+   "_liked_by": null,
+   "_user_tags": null,
+   "creation": "2023-04-16 13:47:54.066633",
+   "default_value": null,
+   "doc_type": "Customer",
+   "docstatus": 0,
+   "doctype_or_field": "DocField",
+   "field_name": "territory",
+   "idx": 0,
+   "is_system_generated": 0,
+   "modified": "2023-04-16 13:47:54.066633",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-territory-default",
+   "owner": "Administrator",
+   "property": "default",
+   "property_type": "Text",
+   "row_name": null,
+   "value": "Saudi Arabia"
+  },
+  {
+   "_assign": null,
+   "_comments": null,
+   "_liked_by": null,
+   "_user_tags": null,
+   "creation": "2023-04-16 13:48:05.039232",
+   "default_value": null,
+   "doc_type": "Customer",
+   "docstatus": 0,
+   "doctype_or_field": "DocField",
+   "field_name": "territory",
+   "idx": 0,
+   "is_system_generated": 0,
+   "modified": "2023-04-16 13:48:05.039232",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-territory-hidden",
+   "owner": "Administrator",
+   "property": "hidden",
+   "property_type": "Check",
+   "row_name": null,
+   "value": "1"
+  },
+  {
+   "_assign": null,
+   "_comments": null,
+   "_liked_by": null,
+   "_user_tags": null,
+   "creation": "2023-04-16 13:47:53.791834",
+   "default_value": null,
+   "doc_type": "Customer",
+   "docstatus": 0,
+   "doctype_or_field": "DocField",
+   "field_name": "territory",
+   "idx": 0,
+   "is_system_generated": 0,
+   "modified": "2023-04-16 13:47:53.791834",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-territory-in_list_view",
+   "owner": "Administrator",
+   "property": "in_list_view",
+   "property_type": "Check",
+   "row_name": null,
+   "value": "0"
+  },
+  {
+   "_assign": null,
+   "_comments": null,
+   "_liked_by": null,
+   "_user_tags": null,
+   "creation": "2023-04-16 13:47:53.965721",
+   "default_value": null,
+   "doc_type": "Customer",
+   "docstatus": 0,
+   "doctype_or_field": "DocField",
+   "field_name": "territory",
+   "idx": 0,
+   "is_system_generated": 0,
+   "modified": "2023-04-16 13:47:53.965721",
+   "modified_by": "Administrator",
+   "module": null,
+   "name": "Customer-territory-in_standard_filter",
+   "owner": "Administrator",
+   "property": "in_standard_filter",
+   "property_type": "Check",
+   "row_name": null,
+   "value": "0"
+>>>>>>> [Add] Fields customer_bus , customer_microbus
   }
  ],
  "sync_on_migrate": 1
