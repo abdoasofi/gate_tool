@@ -44,7 +44,7 @@ frappe.pages['bus-entry'].on_page_load = function(wrapper_element) {
         let button_icon_main = "fas fa-sign-in-alt";
 
         let html_content = `
-            <div class="bus-exit-page-container"> {/* استخدام نفس الكلاس لإعادة استخدام CSS */}
+            <div class="bus-exit-page-container">
                 <div class="page-header">
                     <h1 class="page-title"><i class="fas fa-door-open page-icon-main"></i> ${page_title_text}</h1>
                 </div>
