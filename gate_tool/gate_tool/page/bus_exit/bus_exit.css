@@ -423,3 +423,41 @@
     font-size: 1.1em; /* حجم نسبي لنص الزر */
     /* margin-right: 8px;  موجودة بالفعل في كلاس .button-icon */
 }
+
+.customer-buttons-container {
+    display: flex;
+    gap: 15px; /* مسافة بين الأزرار */
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.customer-type-btn {
+    font-size: 1.2rem;
+    padding: 10px 25px;
+    border-radius: var(--border-radius);
+    transition: all 0.2s ease-in-out;
+}
+
+.customer-type-btn i {
+    margin-right: 8px; /* أو margin-left في RTL */
+}
+
+/* افتراضيًا، استخدم لونًا ثانويًا */
+.customer-type-btn {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+}
+.customer-type-btn:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+    color: white;
+}
+
+/* لون الزر النشط */
+.customer-type-btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    transform: scale(1.05);
+}

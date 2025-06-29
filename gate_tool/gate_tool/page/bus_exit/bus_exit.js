@@ -1,6 +1,5 @@
 // bus_exit.js
 frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
-    // إضافة Font Awesome CSS إذا لم تكن موجودة
     if (!$('link[href*="fontawesome"]').length && !$('script[src*="fontawesome"]').length && !$('link[href*="all.min.css"]').length) {
         let fontAwesomeCdnLink = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css';
         let linkTag = $(`<link rel="stylesheet" href="${fontAwesomeCdnLink}">`);
@@ -24,15 +23,12 @@ frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
     function load_and_render_page() {
         frappe.call({
             method: "frappe.client.get",
-            args: {
-                doctype: "Gate Tool Settings",
-                name: "Gate Tool Settings"
-            },
+            args: { doctype: "Gate Tool Settings", name: "Gate Tool Settings" },
             callback: function(r_settings) {
                 if (r_settings.message) {
                     gate_tool_settings_data = r_settings.message;
                     console.log("Gate Tool Settings loaded:", gate_tool_settings_data);
-                    render_page_content(); // الآن قم ببناء الواجهة وربط الأحداث
+                    render_page_content();
                 } else {
                     frappe.throw("لم يتم تحميل إعدادات Gate Tool. يرجى التحقق من إنشائها وتعيين القيم.");
                 }
@@ -46,6 +42,7 @@ frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
 
     // دالة بناء الواجهة وربط الأحداث والدوال المساعدة
     function render_page_content() {
+        // --- تعديل HTML ليشمل أزرار اختيار العميل ---
         let html_content = `
             <div class="bus-exit-page-container">
                 <div class="page-header">
@@ -53,13 +50,16 @@ frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
                 </div>
                 <div class="selection-grid">
                     <div class="section customer-selection-section">
-                        <label class="section-label"><i class="fas fa-id-card section-icon"></i> اختر العميل (السيارة)</label>
-                        <div id="customer-select-wrapper-exit"></div>
+                        <label class="section-label"><i class="fas fa-bus section-icon"></i> اختر نوع السيارة</label>
+                        <div id="customer-buttons-wrapper" class="customer-buttons-container">
+                        </div>
                         <div id="selected-customer-info-exit" class="selected-info-badge"></div>
                     </div>
                     <div class="section items-selection-section">
                         <label class="section-label"><i class="fas fa-boxes section-icon"></i> اختر الصنف</label>
-                        <div id="items-container-enhanced-exit" class="items-grid-container"></div>
+                        <div id="items-container-enhanced-exit" class="items-grid-container">
+                            <p class="text-muted text-center">الرجاء اختيار نوع السيارة أولاً لعرض الأصناف.</p>
+                        </div>
                     </div>
                 </div>
                 <div id="exemption-details-section" class="section" style="display: none; margin-top: 20px; border-color: var(--warning-color);">
@@ -83,8 +83,8 @@ frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
         `;
         wrapper.html(html_content);
 
-        // تعريف عناصر jQuery بعد بناء HTML
-        const $customerSelectWrapper = wrapper.find('#customer-select-wrapper-exit');
+        // --- تعريف عناصر jQuery بعد بناء HTML ---
+        const $customerButtonsWrapper = wrapper.find('#customer-buttons-wrapper');
         const $selectedCustomerInfo = wrapper.find('#selected-customer-info-exit');
         const $itemsContainer = wrapper.find('#items-container-enhanced-exit');
         const $priceValue = wrapper.find('#price-value-enhanced');
@@ -95,45 +95,62 @@ frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
         const $exemptionDetailsSection = wrapper.find('#exemption-details-section');
         const $exemptionReasonInput = wrapper.find('#exemption-reason');
         const $processExemptionBtn = wrapper.find('#process-exemption-btn');
-
-        // تهيئة حقل العميل
-        customer_field = frappe.ui.form.make_control({
-            df: {
-                fieldname: "customer_select_exit", fieldtype: "Link", label: __("Customer"),
-                options: "Customer", reqd: 1, placeholder: __("ابحث عن العميل..."),
-                onchange: function() {
-                    selectedCustomer = this.get_value();
-                    if (selectedCustomer) {
-                        frappe.db.get_value("Customer", selectedCustomer, "customer_name", (r_cust) => {
-                            $selectedCustomerInfo.text(`العميل: ${r_cust.customer_name || selectedCustomer}`).addClass('visible');
-                        });
-                        if (selectedItem && !exemption_mode_active) fetchAndDisplayPrice();
+        // --- إضافة أزرار العملاء من الإعدادات ---
+        if (gate_tool_settings_data.customer_microbus) {
+            let btn_microbus = $(`<button class="btn customer-type-btn" data-customer-id="${gate_tool_settings_data.customer_microbus}">
+                                    <i class="fas fa-shuttle-van"></i> مايكروباص</button>`);
+            $customerButtonsWrapper.append(btn_microbus);
+        }
+        if (gate_tool_settings_data.customer_bus) {
+            let btn_bus = $(`<button class="btn customer-type-btn" data-customer-id="${gate_tool_settings_data.customer_bus}">
+                                <i class="fas fa-bus-alt"></i> باص</button>`);
+            $customerButtonsWrapper.append(btn_bus);
+        }
+        
+        // دالة جديدة لاختيار العميل وتحديث الواجهة
+        function selectCustomer(customer_id, customer_name) {
+            selectedCustomer = customer_id;
+            selectedItem = null; // إعادة تعيين الصنف المختار عند تغيير العميل
+            $('.item-card-enhanced').removeClass('selected');
+            $selectedCustomerInfo.text(` ${customer_name || customer_id}`).addClass('visible');
+            // جلب مجموعة الأصناف المخصصة للعميل ثم تحميل الأصناف
+            frappe.db.get_value("Customer", customer_id, "custom_item_group")
+                .then(r => {
+                    if (r && r.message && r.message.custom_item_group) {
+                        const item_group = r.message.custom_item_group;
+                        console.log(`Customer ${customer_id} has custom item group: ${item_group}`);
+                        loadItems(item_group); // تمرير مجموعة الأصناف للدالة
                     } else {
-                        $selectedCustomerInfo.text('').removeClass('visible');
-                        selectedItemPrice = 0; $priceValue.text(format_currency(0, itemCurrency));
+                        console.log(`Customer ${customer_id} has no custom item group.`);
+                        $itemsContainer.html('<p class="text-danger text-center">لم يتم تحديد مجموعة أصناف لهذا العميل.</p>');
                     }
-                    updateActionButtonsState();
-                }
-            },
-            parent: $customerSelectWrapper, render_label: false
-        });
-        if(customer_field && customer_field.refresh) customer_field.refresh();
+                })
+                .catch(err => {
+                    console.error("Error fetching custom_item_group:", err);
+                    $itemsContainer.html('<p class="text-danger text-center">خطأ في جلب مجموعة الأصناف للعميل.</p>');
+                });           
+            // إعادة تعيين السعر
+            selectedItemPrice = 0;
+            $priceValue.text(format_currency(0, itemCurrency));
+            updateActionButtonsState();
+        }
 
-        // --- الدوال المساعدة وربط الأحداث معرفة هنا ---
-        function loadItems() {
-            if (!gate_tool_settings_data || !gate_tool_settings_data.item_group) {
-                $itemsContainer.html('<p class="text-danger text-center">لم يتم تحديد مجموعة الأصناف في إعدادات Gate Tool.</p>');
-                $globalLoader.addClass('d-none'); return;
+        // تعديل دالة تحميل الأصناف لتأخذ مجموعة الأصناف كمعامل
+        function loadItems(item_group) {
+            if (!item_group) {
+                $itemsContainer.html('<p class="text-muted text-center">يرجى اختيار العميل أولاً.</p>');
+                return;
             }
-            $globalLoader.removeClass('d-none');
+            $itemsContainer.html('<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>');          
             frappe.call({
                 method: 'frappe.client.get_list',
                 args: {
                     doctype: 'Item', fields: ['name', 'item_name', 'image', 'item_code'],
-                    filters: { 'item_group': gate_tool_settings_data.item_group }, limit_page_length: 100
+                    filters: { 'item_group': item_group }, // استخدام القيمة الممررة
+                    limit_page_length: 100
                 },
                 callback: function(r_items) {
-                    $globalLoader.addClass('d-none'); $itemsContainer.empty();
+                    $itemsContainer.empty();
                     if (r_items.message && r_items.message.length > 0) {
                         const fallbackImageUrl = '/assets/frappe/images/fallback-image.svg';
                         r_items.message.forEach((item) => {
@@ -148,11 +165,29 @@ frappe.pages['bus-exit'].on_page_load = function(wrapper_element) {
                             else if (exemption_mode_active) $priceValue.text(format_currency(0, itemCurrency));
                             updateActionButtonsState();
                         });
-                    } else { $itemsContainer.html('<p class="text-muted text-center">لا توجد أصناف.</p>'); }
-                    updateActionButtonsState();
+                    } else {
+                        $itemsContainer.html('<p class="text-muted text-center">لا توجد أصناف في هذه المجموعة.</p>');
+                    }
                 },
                 error: (err_items) => { $globalLoader.addClass('d-none'); console.error("Error loading items:", err_items); $itemsContainer.html('<p class="text-danger text-center">خطأ في تحميل الأصناف.</p>');}
             });
+        }        
+        // --- ربط الأحداث لأزرار العملاء الجديدة ---
+        $customerButtonsWrapper.on('click', '.customer-type-btn', function() {
+            const customer_id = $(this).data('customer-id');
+            const customer_name_text = $(this).text().trim(); // اسم الزر نفسه
+            
+            // إضافة كلاس 'active' للزر المختار
+            $('.customer-type-btn').removeClass('active btn-primary').addClass('btn-secondary');
+            $(this).removeClass('btn-secondary').addClass('active btn-primary');
+
+            selectCustomer(customer_id, customer_name_text);
+        });
+        
+        // --- الإعداد الافتراضي ---
+        if (gate_tool_settings_data.customer_microbus) {
+            // تفعيل زر الميكروباص افتراضيًا
+            $customerButtonsWrapper.find(`[data-customer-id="${gate_tool_settings_data.customer_microbus}"]`).trigger('click');
         }
 
         function fetchAndDisplayPrice() {
